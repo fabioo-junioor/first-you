@@ -38,8 +38,8 @@
 <style>
 #menuEstab {
   width: 100%;
-  background-color: #333;
-  box-shadow: 3px 3px 5px #33333396;
+  background-color: #494949;
+  box-shadow: 3px 3px 5px #252525;
 
 }
 #menuEstab #b-navbar-nav {
@@ -55,18 +55,26 @@
   font-size: 1rem;
   text-decoration: none;
   padding: 8px 30px;
-  background-color: #1f1f1f;
+  margin: 10px 0px 0px 0px;
   border-radius: 5px;
+  background-color: transparent;
+  box-shadow: 3px 3px 2px #252525;
   border: none;
 
 }
-#menuEstab .navbar a:hover {
+#menuEstab #b-navbar-nav button:hover {
   color: rgb(255, 255, 255);
-  background-color: #000000;
+  background-color: #5f5f5f;
+
+}
+#menuEstab #sidebar-footer{
+  background-color: #494949 !important;
+  box-shadow: 3px 0px 5px #252525 !important;
 
 }
 #menuEstab .b-sidebar-footer {
-  background-color: #333;
+  background-color: #494949;
+  border-top: 1px solid #252525;
 
 }
 #menuEstab .d-flex {
@@ -77,13 +85,14 @@
 #menuEstab .d-flex button {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 30%;
-  background-color: #1f1f1f;
   border: none;
+  background-color: transparent;
+  box-shadow: 3px 3px 2px #252525;
 
 }
 #menuEstab .d-flex button:hover{
   color: rgb(255, 255, 255);
-  background-color: #000000;
+  background-color: #5f5f5f;
 
 }
 #menuEstab .sidebar-links{
@@ -93,25 +102,28 @@
 }
 #menuEstab .sidebar-links a{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background-color: #333;
-  padding: 15px 0px 15px 20px;
+  padding: 10px 0px 10px 20px;
   text-decoration: none;
   margin: 10px 1px;
   color: white;
+  font-size: .9rem;
   border-radius: 5px;
+  border: none;
+  box-shadow: 3px 3px 2px #252525;  
 
 }
 #menuEstab .sidebar-links a:hover{
   color: rgb(255, 255, 255);
-  background-color: #000000;
+  background-color: #5f5f5f;
 
 }
 #menuEstab .avatar{
-  background-color: #333;
+  background-color: #6b03c0;
+  box-shadow: 3px 3px 1px #252525;
   padding: 20px 0px 20px 20px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
-  border-radius: 5px;
 
 }
 #menuEstab .avatar h5{

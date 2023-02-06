@@ -18,8 +18,8 @@
 <style>
 #menuApre {
     width: 100%;
-    background-color: #333;
-    box-shadow: 3px 3px 5px #33333396;
+    background-color: #494949;
+    box-shadow: 3px 3px 5px #252525;
 
 }
 #menuApre #b-navbar-nav{
@@ -31,16 +31,16 @@
 #menuApre .navbar a{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
-    font-size: 1rem;
+    font-size: .9rem;
     text-decoration: none;
     padding: 8px 30px;
-    background-color: #1f1f1f;
     border-radius: 5px;
+    box-shadow: 3px 3px 2px #252525;
 
 }
 #menuApre .navbar a:hover{
   color: rgb(255, 255, 255);
-  background-color: #000000;
+  background-color: #5f5f5f;
   
 }
 </style>
