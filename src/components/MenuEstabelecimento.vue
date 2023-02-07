@@ -57,7 +57,7 @@
   padding: 8px 30px;
   margin: 10px 0px 0px 0px;
   border-radius: 5px;
-  background-color: transparent;
+  background-color: #3a3a3a;
   box-shadow: 3px 3px 2px #252525;
   border: none;
 
@@ -86,7 +86,7 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 30%;
   border: none;
-  background-color: transparent;
+  background-color: #3a3a3a;
   box-shadow: 3px 3px 2px #252525;
 
 }
@@ -101,15 +101,16 @@
 
 }
 #menuEstab .sidebar-links a{
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #3a3a3a;
+  box-shadow: 3px 3px 2px #252525;  
   padding: 10px 0px 10px 20px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   text-decoration: none;
   margin: 10px 1px;
   color: white;
   font-size: .9rem;
   border-radius: 5px;
   border: none;
-  box-shadow: 3px 3px 2px #252525;  
 
 }
 #menuEstab .sidebar-links a:hover{

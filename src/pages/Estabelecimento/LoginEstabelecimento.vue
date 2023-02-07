@@ -1,8 +1,10 @@
 <template>
-    <h1>Login</h1>
+    <p>login est</p>
 </template>
 <script>
-
+export default {
+    
+}
 </script>
 <style>
 

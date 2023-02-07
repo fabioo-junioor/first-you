@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="!logado">
+    <div v-if="logado">
       <InicioApre />
     </div>
     <div v-else>
@@ -17,8 +17,15 @@ export default{
   components: {InicioApre, InicioEstab},
   data(){
     return{
-      logado: false
+      logado: this.$store.state.isMenuTopVisible
 
+    }
+  },
+  methods: {
+    stateMenu(){
+      this.$store.commit('navVisible')
+      console.log(this.$store.state.isMenuTopVisible)
+      //console.log("aasdas")
     }
   }
 }
