@@ -1,44 +1,38 @@
 <template>
   <div id="app">
-    <div v-if="logado">
-      <InicioApre />
-    </div>
-    <div v-else>
-      <InicioEstab />
-    </div>
+    <InicioApre />
   </div>
 </template>
 <script>
 import InicioApre from './pages/Apresentacao/InicioApre.vue'
-import InicioEstab from './pages/Estabelecimento/InicioEstab.vue'
 
 export default{
   name: "App",
-  components: {InicioApre, InicioEstab},
+  components: {InicioApre},
   data(){
     return{
-      logado: this.$store.state.isMenuTopVisible
 
     }
   },
   methods: {
-    stateMenu(){
-      this.$store.commit('navVisible')
-      console.log(this.$store.state.isMenuTopVisible)
-      //console.log("aasdas")
+    search(val){
+
     }
   }
 }
 </script>
 <style>
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 
 }
 #app{
-  width: 100vw;
-  height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
   background-color: #333;
 
 }

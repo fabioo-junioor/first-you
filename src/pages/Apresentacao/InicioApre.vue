@@ -1,20 +1,25 @@
 <template>
   <div id="inicioApre">
-    <MenuApresentacao />
+    <MenuSidebar />
     <router-view />
   </div>
 </template>
 <script>
-import MenuApresentacao from '../../components/MenuApresentacao.vue'
+import MenuSidebar from '../../components/MenuSidebar.vue'
 
 export default {
   name: "InicioApre",
-  components: {MenuApresentacao}
-};
+  components: {MenuSidebar},
+  data(){
+    return{
+      
+    }
+  }
+
+}
 </script>
 <style>
 #inicioApre {
-  width: 100vw;
   height: 100%;
 
 }

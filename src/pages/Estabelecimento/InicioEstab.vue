@@ -1,14 +1,14 @@
 <template>
   <div id="inicioEstab">
-    <MenuEstabelecimento />
-    <router-view />
+    <MenuSidebarEstab />
   </div>
 </template>
 <script>
-import MenuEstabelecimento from '../../components/MenuEstabelecimento.vue'
+import MenuSidebarEstab from '../../components/MenuSidebarEstab.vue'
 
 export default{
-  components: {MenuEstabelecimento}
+  name: "InicioEstab",
+  components: {MenuSidebarEstab}
 
 }
 </script>

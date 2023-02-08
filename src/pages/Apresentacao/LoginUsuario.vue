@@ -2,20 +2,20 @@
     <div id="loginUser">
         <b-form>
             <div>
-                <img src="http://prelocomunicacao.com.br/wp-content/uploads/2021/02/Como-definir-a-minha-persona.jpg" alt="">
+                <img src="../../assets/icons/add_person.svg">
             </div>
             <div v-show="logar">
-                <b-form-input
-                    v-model="form.nome"
-                    type="text"
-                    placeholder="Informe seu nome: "></b-form-input>
                 <b-form-input
                     v-model="form.email"
                     type="email"
                     placeholder="Informe seu email: "></b-form-input>
+                <b-form-input
+                    v-model="form.senha"
+                    type="password"
+                    placeholder="Informe sua senha: "></b-form-input>
                     <div class="buttons-login-user">
                         <b-button @click="logarUser()"
-                            type="submit"
+                            
                             variant="primary">Acessar</b-button>
                         <b-button @click="reset()"
                             type="reset"
@@ -35,6 +35,10 @@
                     v-model="form.telefone"
                     type="fone"
                     placeholder="Informe seu telefone: "></b-form-input>
+                <b-form-input
+                    v-model="form.senha"
+                    type="fone"
+                    placeholder="Informe sua senha: "></b-form-input>
                     <div class="buttons-login-user">
                         <b-button @click="cadastrarUser()"
                             type="submit"
@@ -49,26 +53,61 @@
                     <b-button @click="logar = !logar" v-show="!logar">Fazer Login</b-button>
                 </div>
         </b-form>
+    <Alert :texto=alert.texto :tipo=alert.tipo
+        class="alert-user" v-if="alert.isAlert"/>
     </div>
 </template>
 <script>
+import Alert from '../../components/Alert.vue'
+
 export default {
+    components: {Alert},
     data(){
         return{
             form: {
                 nome: '',
                 email: '',
-                telefone: ''
+                telefone: '',
+                senha: ''
 
             },
-            logar: true
+            alert: {
+                isAlert: false,
+                texto: '',
+                tipo: ''
+
+            },
+            logar: true,
 
         }
     },
     methods: {
         logarUser(){
-            console.log(this.form.nome, this.form.email)
+            if(this.form.email === "fabio" && this.form.senha === "555"){
+                console.log(this.form.email, this.form.senha)
+                this.alert.texto = 'Bem vindo!'
+                this.alert.tipo = 'success'
+                this.alert.isAlert = true
 
+                //this.$store.commit('navVisible')
+                //this.$router.push({name: 'inicioUser'})
+                
+
+            }else{
+                if(this.form.email === "" || this.form.senha === ""){
+                    this.alert.texto = 'Preencha os campos!'
+                    this.alert.tipo = 'danger'
+                    this.alert.isAlert = true
+                    this.resetAlert()
+
+                }else{
+                    this.alert.texto = 'Email ou Senha incorretos!'
+                    this.alert.tipo = 'danger'
+                    this.alert.isAlert = true
+                    this.resetAlert()
+
+                }                           
+            }
         },
         reset(){
             this.form.nome = ''
@@ -78,7 +117,15 @@ export default {
         },
         cadastrarUser(){
             console.log("cadastrar")
-            this.$router.push({path: '/loginUsuario'})
+            
+        },
+        resetAlert(){
+            setTimeout(() => {
+                this.alert.texto = ''
+                this.alert.tipo = ''
+                this.alert.isAlert = false
+
+            }, 4000)
 
         }
     }
@@ -87,6 +134,7 @@ export default {
 </script>
 <style>
 #loginUser{
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -96,7 +144,7 @@ export default {
 }
 #loginUser form{
     background-color: #494949;
-    width: 60%;
+    width: 40%;
     padding: 1rem 1rem;
     border-radius: 5px;
 
@@ -109,8 +157,9 @@ export default {
 
 }
 #loginUser form img{
-    height: 100px;
+    height: 8rem;
     margin-bottom: .8rem;
+    filter: drop-shadow(2px 2px 2px #252525)
 
 }
 #loginUser form input{
@@ -119,6 +168,7 @@ export default {
     height: 3rem;
     border-radius: 5px;
     background-color: #252525;
+    box-shadow: 3px 3px 0px #1b1b1b;
     color: white;
 
 }
@@ -138,6 +188,7 @@ export default {
 }
 #loginUser .buttons-login-user button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    box-shadow: 3px 3px 0px #252525;
     width: 40%;
     height: 3rem;
     border-radius: 5px;
@@ -157,6 +208,12 @@ export default {
 }
 #loginUser .link-cadastrar-user button:hover{
     background-color: #5f5f5f;
+
+}
+#loginUser .alert-user{
+    position: absolute;
+    top: 10%;
+    right: 2%;
 
 }
 </style>

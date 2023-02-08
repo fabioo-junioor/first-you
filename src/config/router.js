@@ -6,6 +6,8 @@ import LoginUsuario from '../pages/Apresentacao/LoginUsuario.vue'
 import LoginEstabelecimento from '../pages/Estabelecimento/LoginEstabelecimento.vue'
 import Configuracoes from '../pages/Estabelecimento/Configuracoes.vue'
 
+import InicioUser from '../pages/Usuario/InicioUser.vue'
+
 const routes = [
     {
         path: "/sobre",
@@ -26,6 +28,11 @@ const routes = [
         path: "/configuracoes",
         name: "configuracoes",
         component: Configuracoes
+    },
+    {
+        path: "/inicioUser",
+        name: "inicioUser",
+        component: InicioUser
     },
     {
         path: '/*',

@@ -4,13 +4,13 @@ const store = createStore({
     state(){
         return{
             isMenuTopVisible: true,
-            isMenuLeftVisible: false
 
         }
     },
     mutations: {
-        menuTopState(){
-            this.state.isMenuTopVisible = false
+        navVisible(){
+            this.state.isMenuTopVisible = !this.state.isMenuTopVisible
+            console.log("---")
 
         }
     }
