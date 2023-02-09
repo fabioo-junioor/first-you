@@ -69,6 +69,25 @@
               <span class="tooltip">{{ menuItem.tooltip || menuItem.name }}</span>
             </li>
           </span>
+          <span>
+            <li class="link-modal-user">
+              <a v-b-modal.modal-scrollable-user-lg>
+                <ModalUser />
+                <i class="bx bx-log-in" />
+                <span class="links_name" v-show="isOpened">Login Usuário</span>
+              </a>
+            </li>
+          </span>
+          <hr>
+          <span>
+            <li class="link-modal-estabelecimento">
+              <a v-b-modal.modal-scrollable-estab-lg>
+                <ModalEstab />
+                <i class="bx bx-log-in" />
+                <span class="links_name" v-show="isOpened">Login Estabelecimento</span>
+              </a>
+            </li>
+          </span>
         </ul>
       </div>
       
@@ -107,8 +126,12 @@
 </template>
 
 <script>
+import ModalUser from './ModalUser.vue'
+import ModalEstab from './ModalEstab.vue'
+
   export default {
     name: 'MenuSidebarUser',
+    components: {ModalUser, ModalEstab},
     props: {
       //! Menu settings
       isMenuOpen: {
@@ -604,6 +627,37 @@
   #my-scroll::-webkit-scrollbar-button:vertical:end:increment{
     display:none;
   } */
+  /*
+  span > .link-modal-user{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+    padding: 0 !important;
+
+  }
+  .link-modal-user:hover,
+  .link-modal-user button:hover .links_name,
+  .link-modal-user button:hover i{
+    background-color: #fff;
+    transition: all 0.5s ease;
+    color: black !important;
+    border-radius: 15px;
+
+  }
+  .link-modal-user button{
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+
+  }
+  .link-modal-user i{
+    font-size: 20px !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+    
+  }
+  */
   @media (max-width: 420px) {
     .sidebar li .tooltip {
       display: none;

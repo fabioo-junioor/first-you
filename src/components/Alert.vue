@@ -37,16 +37,14 @@
       }
     },
     created() {
-      setTimeout(() => {
-        this.showAlert()
+     this.showAlert()
         
-      }, 200)
-    },
+    }
   }
 </script>
 <style>
 .alert{
-  width: 30%;
+  width: 60%;
 
 }
 .alert .close{

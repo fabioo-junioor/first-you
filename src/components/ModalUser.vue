@@ -1,8 +1,13 @@
 <template>
-    <div id="loginUser">
+    <b-modal id="modal-scrollable-user-lg" size="lg" scrollable title="Login Usuário">
+      <Alert :texto=alert.texto 
+          :tipo=alert.tipo
+          class="alert-user"
+          v-if="alert.isAlert"/>
+      <div id="loginUser">
         <b-form>
             <div>
-                <img src="../../assets/icons/add_person.svg">
+                <img src="../assets/icons/add_person.svg">
             </div>
             <div v-show="logar">
                 <b-form-input
@@ -52,15 +57,16 @@
                     <b-button @click="logar = !logar" v-show="logar">Cadastre-se</b-button>
                     <b-button @click="logar = !logar" v-show="!logar">Fazer Login</b-button>
                 </div>
+                
         </b-form>
-    <Alert :texto=alert.texto :tipo=alert.tipo
-        class="alert-user" v-if="alert.isAlert"/>
     </div>
+    </b-modal>
 </template>
 <script>
-import Alert from '../../components/Alert.vue'
+import Alert from '../components/Alert.vue'
 
 export default {
+    name: "ModalUser",
     components: {Alert},
     data(){
         return{
@@ -133,24 +139,42 @@ export default {
 
 </script>
 <style>
+.modal-header h5{
+  color: #494949;
+  font-size: 1.4rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+.modal-body{
+  padding: 0;
+  background-color: #494949;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+
+}
+.modal-footer button{
+  box-shadow: 2px 2px 3px #252525;
+}
 #loginUser{
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 5rem;
+    width: 100%;
 
 }
 #loginUser form{
     background-color: #494949;
-    width: 40%;
+    width: 100% !important;
     padding: 1rem 1rem;
     border-radius: 5px;
 
 }
 #loginUser form div{
-    width: 100%;
+    width: 100% !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -208,12 +232,6 @@ export default {
 }
 #loginUser .link-cadastrar-user button:hover{
     background-color: #5f5f5f;
-
-}
-#loginUser .alert-user{
-    position: absolute;
-    top: 10%;
-    right: 2%;
 
 }
 </style>
