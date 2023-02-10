@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router"
 
 import Sobre from '../pages/Apresentacao/Sobre.vue'
 
-import LoginEstabelecimento from '../pages/Estabelecimento/LoginEstabelecimento.vue'
+import InicioEstab from '../pages/Estabelecimento/InicioEstab.vue'
 import Configuracoes from '../pages/Estabelecimento/Configuracoes.vue'
 
 import InicioUser from '../pages/Usuario/InicioUser.vue'
@@ -14,9 +14,9 @@ const routes = [
         component: Sobre
     },
     {
-        path: "/loginEstabelecimento",
-        name: "loginEstabelecimento",
-        component: LoginEstabelecimento
+        path: "/inicioEstab",
+        name: "inicioEstab",
+        component: InicioEstab
     },
     {
         path: "/configuracoes",
@@ -30,6 +30,7 @@ const routes = [
     },
     {
         path: '/*',
+        name: 'app',
         redirect: '/'
     }
 ]

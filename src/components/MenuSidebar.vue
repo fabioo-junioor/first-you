@@ -56,9 +56,9 @@
             v-for="(menuItem, index) in menuItems"
             :key="index"
           >
-            <li>
+            <li v-if="menuItem.type === typeLogin">
               <!--<a :href="menuItem.link">-->
-              <router-link :to="menuItem.link" class="link" v-show="menuItem.type">
+              <router-link :to="menuItem.link" class="link">
                 <i
                   class="bx"
                   :class="menuItem.icon || 'bx-square-rounded'"
@@ -69,8 +69,9 @@
               <span class="tooltip">{{ menuItem.tooltip || menuItem.name }}</span>
             </li>
           </span>
+          <hr>
           <span>
-            <li class="link-modal-user">
+            <li class="link-modal-user" v-if="buttonsInOut === '1'">
               <a v-b-modal.modal-scrollable-user-lg>
                 <ModalUser />
                 <i class="bx bx-log-in" />
@@ -78,10 +79,9 @@
               </a>
             </li>
           </span>
-          <hr>
           <span>
-            <li class="link-modal-estabelecimento">
-              <a v-b-modal.modal-scrollable-estab-lg>
+            <li class="link-modal-estabelecimento" v-if="buttonsInOut === '1'">
+              <a v-b-modal.modal-scrollable-estab-xl>
                 <ModalEstab />
                 <i class="bx bx-log-in" />
                 <span class="links_name" v-show="isOpened">Login Estabelecimento</span>
@@ -105,7 +105,7 @@
             v-else
             class="bx bxs-user-rectangle"
           />
-          <div class="name_job">
+          <div class="name_job" v-if="false">
             <div class="name">
               {{ profileName }}
             </div>
@@ -115,9 +115,10 @@
           </div>
         </div>
         <i
-          v-if="isExitButton"
+          v-if="buttonsInOut === '2' || buttonsInOut === '3'"
           class="bx bx-log-out"
           id="log_out"
+          @click="buttonExitClicked()"
           @click.stop="$emit('button-exit-clicked')"
         />
       </div>
@@ -130,7 +131,7 @@ import ModalUser from './ModalUser.vue'
 import ModalEstab from './ModalEstab.vue'
 
   export default {
-    name: 'MenuSidebarUser',
+    name: 'MenuSidebar',
     components: {ModalUser, ModalEstab},
     props: {
       //! Menu settings
@@ -171,20 +172,21 @@ import ModalEstab from './ModalEstab.vue'
             name: 'Dashboard',
             tooltip: 'Dashboard',
             icon: 'bx-grid-alt',
-            type: false
+            type: '1'
           },
           {
             link: '#',
             name: 'User',
             tooltip: 'User',
             icon: 'bx-user',
-            type: true
+            type: '1'
           },
           {
             link: '#',
             name: 'Messages',
             tooltip: 'Messages',
             icon: 'bx-chat',
+            type: '2'
           },
           {
             link: '#',
@@ -215,7 +217,7 @@ import ModalEstab from './ModalEstab.vue'
             name: 'Configurações',
             tooltip: 'Setting',
             icon: 'bx-cog',
-            type: true
+            type: '3'
           },
         ],
       },
@@ -299,11 +301,34 @@ import ModalEstab from './ModalEstab.vue'
     },
     data() {
       return {
-        isOpened: false
+        isOpened: false,
+        typeLogin: '1',
+        buttonsInOut: '1'
+
       }
     },
     mounted() {
       this.isOpened = this.isMenuOpen
+      this.atlzStatus()
+      
+    },
+    methods: {
+      atlzStatus(){
+        this.typeLogin = this.$store.state.typeLogin
+        this.buttonsInOut = this.$store.state.buttonsInOut
+        console.log("wt ", this.$store.state.typeLogin, this.buttonsInOut)
+        console.log(this.$store.state.buttonsInOut)
+
+      },
+      buttonExitClicked(){
+        console.log('saiu')
+        this.$store.commit('navVisible', '1')
+        this.$router.push({path: '/'})
+        setTimeout(() => {
+          this.$router.go(0)
+
+        }, 1000)
+      }
     },
     computed: {
       cssVars() {
@@ -320,11 +345,12 @@ import ModalEstab from './ModalEstab.vue'
           '--menu-items-text-color': this.menuItemsTextColor,
           '--menu-footer-text-color': this.menuFooterTextColor,
         }
-      },
+      }
     },
     watch: {
       isOpened() {
         window.document.body.style.paddingLeft = this.isOpened && this.isPaddingLeft ? this.menuOpenedPaddingLeftBody : this.menuClosedPaddingLeftBody
+        
       }
     }
   }

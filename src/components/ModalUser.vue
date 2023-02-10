@@ -19,8 +19,7 @@
                     type="password"
                     placeholder="Informe sua senha: "></b-form-input>
                     <div class="buttons-login-user">
-                        <b-button @click="logarUser()"
-                            
+                        <b-button @click="logarUser()"                            
                             variant="primary">Acessar</b-button>
                         <b-button @click="reset()"
                             type="reset"
@@ -42,7 +41,7 @@
                     placeholder="Informe seu telefone: "></b-form-input>
                 <b-form-input
                     v-model="form.senha"
-                    type="fone"
+                    type="password"
                     placeholder="Informe sua senha: "></b-form-input>
                     <div class="buttons-login-user">
                         <b-button @click="cadastrarUser()"
@@ -95,8 +94,13 @@ export default {
                 this.alert.tipo = 'success'
                 this.alert.isAlert = true
 
-                //this.$store.commit('navVisible')
-                //this.$router.push({name: 'inicioUser'})
+                this.$store.commit('navVisible', '2')
+                console.log("// ", this.$store.state.typeLogin)
+                this.$router.push({path: '/inicioUser'})
+                setTimeout(() => {
+                    this.$router.go(0)
+
+                }, 3000)
                 
 
             }else{
@@ -118,6 +122,8 @@ export default {
         reset(){
             this.form.nome = ''
             this.form.email = ''
+            this.form.senha = ''
+            this.form.telefone = ''
             console.log('resetou')
 
         },
@@ -156,7 +162,8 @@ export default {
 
 }
 .modal-footer button{
-  box-shadow: 2px 2px 3px #252525;
+  display: none;
+
 }
 #loginUser{
     display: flex;
