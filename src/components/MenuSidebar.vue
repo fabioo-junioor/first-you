@@ -168,56 +168,32 @@ import ModalEstab from './ModalEstab.vue'
         type: Array,
         default: () => [
           {
-            link: '#',
-            name: 'Dashboard',
-            tooltip: 'Dashboard',
-            icon: 'bx-grid-alt',
-            type: '1'
+            link: '/',
+            name: 'Inicio',
+            tooltip: 'Inicio Apresentacao',
+            icon: 'bx bx-home-alt',
+            type: '1' || null
           },
           {
-            link: '#',
-            name: 'User',
-            tooltip: 'User',
-            icon: 'bx-user',
-            type: '1'
+            link: '/sobre',
+            name: 'Sobre',
+            tooltip: 'Sobre',
+            icon: 'bx bx-info-circle',
+            type: '1' || null
           },
           {
-            link: '#',
-            name: 'Messages',
-            tooltip: 'Messages',
-            icon: 'bx-chat',
+            link: '/inicioUser',
+            name: 'Inicio',
+            tooltip: 'Inicio User',
+            icon: 'bx bx-home-alt',
             type: '2'
-          },
-          {
-            link: '#',
-            name: 'Analytics',
-            tooltip: 'Analytics',
-            icon: 'bx-pie-chart-alt-2',
-          },
-          {
-            link: '#',
-            name: 'File Manager',
-            tooltip: 'Files',
-            icon: 'bx-folder',
-          },
-          {
-            link: '#',
-            name: 'Order',
-            tooltip: 'Order',
-            icon: 'bx-cart-alt',
-          },
-          {
-            link: '#',
-            name: 'Saved',
-            tooltip: 'Saved',
-            icon: 'bx-heart',
           },
           {
             link: '/configuracoes',
             name: 'Configurações',
             tooltip: 'Setting',
             icon: 'bx-cog',
-            type: '3'
+            type: '2'
           },
         ],
       },
@@ -237,7 +213,7 @@ import ModalEstab from './ModalEstab.vue'
       //! Profile detailes
       profileImg: {
         type: String,
-        default: require('../assets/icons/add_person.svg'),
+        default: require('../assets/exemple/img_perfil.jpg'),
       },
       profileName: {
         type: String,
