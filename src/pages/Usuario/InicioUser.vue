@@ -11,7 +11,8 @@
       :agendado="card.agendado"
       :favorito="card.favorito"
       :titulo="card.titulo"
-      :descricao="card.descricao"/>
+      :descricao="card.descricao"
+      :imgSrc="card.imgSrc"/>
   </div>
 </template>
 <script>
@@ -26,25 +27,28 @@ export default{
         {
           id: 1,
           agendado: false,
-          favorito: true,
-          titulo: "Confraria",
+          favorito: false,
+          titulo: "Confraria Pub",
           descricao: "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...",
+          imgSrc: require("../../assets/exemple/img_capa.jpg")
     
         },
         {
           id: 2,
           agendado: false,
           favorito: false,
-          titulo: "Gonha",
+          titulo: "Gonha Lanches",
           descricao: "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...",
+          imgSrc: require("../../assets/exemple/img_capa.jpg")
     
         },
         {
           id: 3,
           agendado: false,
           favorito: false,
-          titulo: "Roque",
+          titulo: "Roque Lanches",
           descricao: "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...",
+          imgSrc: require("../../assets/exemple/img_capa.jpg")
     
         }
       ]

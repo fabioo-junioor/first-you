@@ -12,7 +12,7 @@
     </div>
     <b-card
       :title="titulo"
-      img-src="https://img.freepik.com/vetores-gratis/bar-composicao-realista-interior_1284-24320.jpg"
+      :img-src=imgSrc
       img-alt="Image"
       img-top
       tag="article"
@@ -46,7 +46,8 @@ export default {
         descricao: String,
         agendado: Boolean,
         id: Number,
-        favorito: Boolean
+        favorito: Boolean,
+        imgSrc: String
 
     },
     methods: {
@@ -80,7 +81,13 @@ export default {
     text-align: center;
     padding: 5px;
     font-size: 1.3rem;
-    text-decoration: underline;
+    filter: drop-shadow(2px 2px 2px #252525);
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 
 }
 #cardEstab article{
@@ -93,6 +100,11 @@ export default {
     color: white;
     text-align: justify;
     font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 
 }
 #cardEstab .card-body{

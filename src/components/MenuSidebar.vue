@@ -40,6 +40,7 @@
           style="overflow: visible;"
         >
           <li
+            v-show="false"
             v-if="isSearch"
             @click="isOpened = true"
           >
@@ -69,7 +70,7 @@
               <span class="tooltip">{{ menuItem.tooltip || menuItem.name }}</span>
             </li>
           </span>
-          <hr>
+          <hr v-show="buttonsInOut === '1'">
           <span>
             <li class="link-modal-user" v-if="buttonsInOut === '1'">
               <a v-b-modal.modal-scrollable-user-lg>
@@ -95,7 +96,8 @@
         v-if="isLoggedIn"
         class="profile" 
       >
-        <div class="profile-details">
+        <div class="profile-details"
+          v-if="buttonsInOut === '2' || buttonsInOut === '3'">
           <img
             v-if="profileImg"
             :src="profileImg"
@@ -299,8 +301,8 @@ import ModalEstab from './ModalEstab.vue'
       buttonExitClicked(){
         console.log('saiu')
         this.$store.commit('navVisible', '1')
-        this.$router.push({path: '/'})
-        setTimeout(() => {
+        setTimeout(async () => {
+          await this.$router.push({path: '/'})
           this.$router.go(0)
 
         }, 1000)
@@ -629,37 +631,11 @@ import ModalEstab from './ModalEstab.vue'
   #my-scroll::-webkit-scrollbar-button:vertical:end:increment{
     display:none;
   } */
-  /*
-  span > .link-modal-user{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+  .sidebar hr{
+    border: 2px solid #fff;
     border-radius: 15px;
-    padding: 0 !important;
-
-  }
-  .link-modal-user:hover,
-  .link-modal-user button:hover .links_name,
-  .link-modal-user button:hover i{
-    background-color: #fff;
-    transition: all 0.5s ease;
-    color: black !important;
-    border-radius: 15px;
-
-  }
-  .link-modal-user button{
-    background-color: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-
-  }
-  .link-modal-user i{
-    font-size: 20px !important;
-    border-radius: 12px !important;
-    padding: 0 !important;
     
   }
-  */
   @media (max-width: 420px) {
     .sidebar li .tooltip {
       display: none;

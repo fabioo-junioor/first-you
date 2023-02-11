@@ -53,8 +53,8 @@
                     </div>
             </div>
                 <div class="link-cadastrar-user">
-                    <b-button @click="logar = !logar" v-show="logar">Cadastre-se</b-button>
-                    <b-button @click="logar = !logar" v-show="!logar">Fazer Login</b-button>
+                    <b-button @click="logar = !logar,  reset()" v-if="logar">Cadastre-se</b-button>
+                    <b-button @click="logar = !logar, reset()" v-else>Fazer Login</b-button>
                 </div>
                 
         </b-form>
@@ -95,9 +95,8 @@ export default {
                 this.alert.isAlert = true
 
                 this.$store.commit('navVisible', '2')
-                console.log("// ", this.$store.state.typeLogin)
-                this.$router.push({path: '/inicioUser'})
-                setTimeout(() => {
+                setTimeout(async () => {
+                    await this.$router.push({path: '/inicioUser'})
                     this.$router.go(0)
 
                 }, 3000)
@@ -124,11 +123,11 @@ export default {
             this.form.email = ''
             this.form.senha = ''
             this.form.telefone = ''
-            console.log('resetou')
+            console.log('Resetou')
 
         },
         cadastrarUser(){
-            console.log("cadastrar")
+            console.log("Cadastro")
             
         },
         resetAlert(){
@@ -137,7 +136,7 @@ export default {
                 this.alert.tipo = ''
                 this.alert.isAlert = false
 
-            }, 4000)
+            }, 3000)
 
         }
     }
