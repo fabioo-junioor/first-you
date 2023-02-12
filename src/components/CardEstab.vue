@@ -23,22 +23,27 @@
         <b-button href="#" variant="outline-info">
             <i class="bx bx-info-circle"/>
         </b-button>
-        <b-button v-if="!agendado"
-        @click="agendar(id)"
-        variant="outline-success">Agendar</b-button>
+        <b-button
+            @click="agendar(id)"
+            v-if="!agendado"
+            variant="outline-success">Agendar         
+        </b-button>
         <b-button v-else
-        @click="cancelarAgendamento(id)"
-        variant="outline-success">Cancelar Agendamento</b-button>
+            @click="cancelarAgendamento(id)"
+            variant="outline-success">Cancelar Agendamento</b-button>
       </div>
     </b-card>
   </div>
 </template>
 <script>
+import ModalAgendar from '../components/ModalAgendar.vue'
+
 export default {
     name: "CardEstab",
+    components: {ModalAgendar},
     data(){
         return{
-
+            
         }
     },
     props: {

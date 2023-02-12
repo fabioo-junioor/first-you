@@ -58,6 +58,6 @@
   font-size: .9rem;
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-
+  
 }
 </style>

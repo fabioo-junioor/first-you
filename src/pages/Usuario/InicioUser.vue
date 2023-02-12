@@ -14,15 +14,22 @@
       :descricao="card.descricao"
       :imgSrc="card.imgSrc"/>
   </div>
+  <ModalAgendar
+    @alertMsg="alertMsg"
+    :idEscolhido="idEscolhido"
+    :nomeEscolhido="nomeEscolhido"/>
 </template>
 <script>
 import CardEstab from '../../components/CardEstab.vue'
+import ModalAgendar from '../../components/ModalAgendar.vue'
 
 export default{
   name: "InicioUser",
-  components: {CardEstab},
+  components: {CardEstab, ModalAgendar},
   data(){
     return{
+      idEscolhido: null,
+      nomeEscolhido: '',
       estabelecimento: [
         {
           id: 1,
@@ -63,13 +70,15 @@ export default{
 
         }
       })
-      //this.$router.go(0)
     },
     agendar(id){
       console.log("Agendou-> ", id)
       this.estabelecimento.forEach(e => {
         if(id === e.id){
+          this.idEscolhido = e.id
+          this.nomeEscolhido = e.titulo
           e.agendado = !e.agendado
+          this.$root.$emit('bv::show::modal', 'modalAgendar')
 
         }
       })
