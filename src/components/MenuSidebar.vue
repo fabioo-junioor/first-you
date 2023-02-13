@@ -107,7 +107,7 @@
             v-else
             class="bx bxs-user-rectangle"
           />
-          <div class="name_job" v-if="false">
+          <div class="name_job" v-if="buttonsInOut === '2' || buttonsInOut === '3'">
             <div class="name">
               {{ profileName }}
             </div>
@@ -219,7 +219,7 @@ import ModalEstab from './ModalEstab.vue'
       },
       profileName: {
         type: String,
-        default: 'Fayzullo Saidakbarov',
+        default: localStorage.getItem('nomeUserLogado'),
       },
       profileRole: {
         type: String,
@@ -287,19 +287,20 @@ import ModalEstab from './ModalEstab.vue'
     },
     mounted() {
       this.isOpened = this.isMenuOpen
-      this.atlzStatus()
+      this.atualizaStatus()
       
     },
     methods: {
-      atlzStatus(){
+      atualizaStatus(){
         this.typeLogin = this.$store.state.typeLogin
         this.buttonsInOut = this.$store.state.buttonsInOut
-        console.log("wt ", this.$store.state.typeLogin, this.buttonsInOut)
-        console.log(this.$store.state.buttonsInOut)
+        //console.log("wt ", this.$store.state.typeLogin, this.buttonsInOut)
+        //console.log(this.$store.state.buttonsInOut)
+
 
       },
       buttonExitClicked(){
-        console.log('saiu')
+        this.$store.commit('logoutUser')
         this.$store.commit('navVisible', '1')
         setTimeout(async () => {
           await this.$router.push({path: '/'})

@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 const store = createStore({
     state: {
         typeLogin: localStorage.getItem('typeLogin'),
-        buttonsInOut: localStorage.getItem('typeLogin')
+        buttonsInOut: localStorage.getItem('typeLogin'),
         
     },
     mutations: {
@@ -26,6 +26,18 @@ const store = createStore({
                 state.buttonsInOut = '3'
                 
             }
+        },
+        loginUser(state, dadosUser){
+            localStorage.setItem('idUserLogado', dadosUser[0].idUsuario)
+            localStorage.setItem('nomeUserLogado', dadosUser[0].nome)
+            console.log('login ')
+    
+        },
+        logoutUser(state){
+            localStorage.removeItem('idUserLogado')
+            localStorage.removeItem('nomeUserLogado')
+            console.log('logout ')
+
         }
     }
 })

@@ -63,6 +63,7 @@
 </template>
 <script>
 import Alert from '../components/Alert.vue'
+const url = "http://localhost/speedreservaback/"
 
 export default {
     name: "ModalUser",
@@ -88,35 +89,45 @@ export default {
     },
     methods: {
         logarUser(){
-            if(this.form.email === "fabio" && this.form.senha === "555"){
-                console.log(this.form.email, this.form.senha)
-                this.alert.texto = 'Bem vindo!'
-                this.alert.tipo = 'success'
-                this.alert.isAlert = true
+            var dadosLogin = {email: this.form.email, senha: this.form.senha}
+            fetch(url+'auth.php?buscarUser=1', {
+                method: "POST",
+                body: JSON.stringify(dadosLogin)
+            })
+                .then((res) => res.json())
+                .then((dados) => {
+                    console.log("-> ", dados)
+                    if(dados[0].idUsuario != 'null'){
+                        this.alert.texto = 'Bem vindo!'
+                        this.alert.tipo = 'success'
+                        this.alert.isAlert = true
 
-                this.$store.commit('navVisible', '2')
-                setTimeout(async () => {
-                    await this.$router.push({path: '/inicioUser'})
-                    this.$router.go(0)
+                        this.$store.commit('loginUser', dados)
+                        this.$store.commit('navVisible', '2')
+                        setTimeout(async () => {
+                            await this.$router.push({path: '/inicioUser'})
+                            this.$router.go(0)
 
-                }, 3000)
-                
+                        }, 3000)        
+                    }else{
+                        if(this.form.email === "" || this.form.senha === ""){
+                            this.alert.texto = 'Preencha os campos!'
+                            this.alert.tipo = 'danger'
+                            this.alert.isAlert = true
+                            this.resetAlert()
 
-            }else{
-                if(this.form.email === "" || this.form.senha === ""){
-                    this.alert.texto = 'Preencha os campos!'
-                    this.alert.tipo = 'danger'
-                    this.alert.isAlert = true
-                    this.resetAlert()
+                        }else{
+                            this.alert.texto = 'Email ou Senha incorretos!'
+                            this.alert.tipo = 'danger'
+                            this.alert.isAlert = true
+                            this.resetAlert()
 
-                }else{
-                    this.alert.texto = 'Email ou Senha incorretos!'
-                    this.alert.tipo = 'danger'
-                    this.alert.isAlert = true
-                    this.resetAlert()
+                        }                           
+                    }
 
-                }                           
-            }
+                })
+                .catch(console.log)
+
         },
         reset(){
             this.form.nome = ''
@@ -137,7 +148,6 @@ export default {
                 this.alert.isAlert = false
 
             }, 3000)
-
         }
     }
 }
