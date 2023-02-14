@@ -7,12 +7,12 @@
       @agendar="agendar"
       @addFavorito="addFavorito"
       @removeFavorito="removeFavorito"
-      :id="card.id"
+      :idEstabelecimento="card.idEstabelecimento"
       :agendado="card.agendado"
       :favorito="card.favorito"
-      :titulo="card.titulo"
+      :nome="card.nome"
       :descricao="card.descricao"
-      :imgSrc="card.imgSrc"/>
+      :imgSrc= "require('../../assets/exemple/img_capa.jpg') "/>
   </div>
   <ModalAgendar
     @alertMsg="alertMsg"
@@ -22,6 +22,7 @@
 <script>
 import CardEstab from '../../components/CardEstab.vue'
 import ModalAgendar from '../../components/ModalAgendar.vue'
+const url = "http://localhost/speedreservaback/"
 
 export default{
   name: "InicioUser",
@@ -30,77 +31,94 @@ export default{
     return{
       idEscolhido: null,
       nomeEscolhido: '',
-      estabelecimento: [
+      estabelecimento: [        
         {
-          id: 1,
-          agendado: false,
-          favorito: false,
-          titulo: "Confraria Pub",
-          descricao: "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...",
-          imgSrc: require("../../assets/exemple/img_capa.jpg")
+          idEstabelecimento: '',
+          nome: '',
+          descricao: '',
+          agendado: '0',
+          favorito: '0',
     
-        },
-        {
-          id: 2,
-          agendado: false,
-          favorito: false,
-          titulo: "Gonha Lanches",
-          descricao: "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...",
-          imgSrc: require("../../assets/exemple/img_capa.jpg")
-    
-        },
-        {
-          id: 3,
-          agendado: false,
-          favorito: false,
-          titulo: "Roque Lanches",
-          descricao: "Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...",
-          imgSrc: require("../../assets/exemple/img_capa.jpg")
-    
-        }
+        }        
       ]
     }
   },
   methods: {
-    cancelarAgendamento(id){
-      console.log("Cancelou agendamento-> ", id)
+    cancelarAgendamento(idEstabelecimento){
+      console.log("Cancelou agendamento-> ", idEstabelecimento)
       this.estabelecimento.forEach(e => {
-        if(id === e.id){
-          e.agendado = !e.agendado
+        if(idEstabelecimento === e.idEstabelecimento){
+          //e.agendado = !e.agendado
 
         }
       })
     },
-    agendar(id){
-      console.log("Agendou-> ", id)
+    agendar(idEstabelecimento){
+      console.log("Agendou-> ", idEstabelecimento)
       this.estabelecimento.forEach(e => {
-        if(id === e.id){
-          this.idEscolhido = e.id
-          this.nomeEscolhido = e.titulo
-          e.agendado = !e.agendado
+        if(idEstabelecimento === e.idEstabelecimento){
+          this.idEscolhido = e.idEstabelecimento
+          this.nomeEscolhido = e.nome
+          //e.agendado = !e.agendado
           this.$root.$emit('bv::show::modal', 'modalAgendar')
 
         }
       })
     },
-    addFavorito(id){
-      console.log("Favoritou-> ", id)
-      this.estabelecimento.forEach(e => {
-        if(id === e.id){
-          e.favorito = !e.favorito
-
-        }
+    addFavorito(idEstabelecimento){
+      var dadosFavorito = {idUsuario: localStorage.getItem('idUserLogado'), idEstabelecimento: idEstabelecimento}
+      fetch(url+'insertDeleteFavorito.php?insertFavorito=1', {
+        method: "POST",
+        body: JSON.stringify(dadosFavorito)
       })
+        .then((res) => res.json())
+        .then((dados) => {
+          if(dados[0].idFavorito == 'success'){
+            console.log("Favorito-> ", idEstabelecimento)
+              this.$router.go(0)
+
+            }
+        })
+          .catch(console.log)
+
     },
-    removeFavorito(id){
-      console.log("Removeu favorito-> ", id)
-      this.estabelecimento.forEach(e => {
-        if(id === e.id){
-          e.favorito = !e.favorito
-
-        }
+    removeFavorito(idEstabelecimento){
+      var dadosFavorito = {idUsuario: localStorage.getItem('idUserLogado'), idEstabelecimento: idEstabelecimento}
+      fetch(url+'insertDeleteFavorito.php?deleteFavorito=1', {
+        method: "POST",
+        body: JSON.stringify(dadosFavorito)
       })
+        .then((res) => res.json())
+        .then((dados) => {
+          if(dados[0].idFavorito == 'success'){
+            console.log("Removeu favorito-> ", idEstabelecimento)
+            this.$router.go(0)
+
+            }
+        })
+          .catch(console.log)
+
+    },
+    buscaEstabelecimentos(){
+      var dadosUser = {idUsuario: localStorage.getItem('idUserLogado')}
+      fetch(url+'selectEstabs.php?buscarEstabs=1', {
+        method: "POST",
+        body: JSON.stringify(dadosUser)
+      })
+        .then((res) => res.json())
+        .then((dados) => {
+          console.log("-> ", dados)
+          this.estabelecimento = dados
+          console.log("--> ", this.estabelecimento)
+        
+        })
+          .catch(console.log)
+
     }
+  },
+  created(){
+    this.buscaEstabelecimentos()
+
   }
 }
 </script>

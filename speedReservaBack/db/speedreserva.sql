@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 13-Fev-2023 às 05:14
+-- Tempo de geração: 14-Fev-2023 às 03:47
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -38,7 +38,14 @@ CREATE TABLE IF NOT EXISTS `agendamento` (
   PRIMARY KEY (`idAgendamento`),
   KEY `idUsuario` (`idUsuario`),
   KEY `idEstabelecimento` (`idEstabelecimento`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Extraindo dados da tabela `agendamento`
+--
+
+INSERT INTO `agendamento` (`idAgendamento`, `idUsuario`, `idEstabelecimento`, `qtdPessoas`, `observacao`, `dataTime`) VALUES
+(1, 1, 3, 10, '', '2023-02-13 23:31:35');
 
 -- --------------------------------------------------------
 
@@ -54,16 +61,19 @@ CREATE TABLE IF NOT EXISTS `estabelecimento` (
   `email` varchar(255) NOT NULL,
   `senha` varchar(255) NOT NULL,
   `nomeResponsavel` varchar(255) NOT NULL,
+  `descricao` varchar(255) NOT NULL,
   `apto` tinyint(1) NOT NULL,
   PRIMARY KEY (`idEstabelecimento`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `estabelecimento`
 --
 
-INSERT INTO `estabelecimento` (`idEstabelecimento`, `nome`, `telefone`, `email`, `senha`, `nomeResponsavel`, `apto`) VALUES
-(1, 'confraria pub', 888888888, 'confraria@bol.com', '111', 'Carlos', 0);
+INSERT INTO `estabelecimento` (`idEstabelecimento`, `nome`, `telefone`, `email`, `senha`, `nomeResponsavel`, `descricao`, `apto`) VALUES
+(1, 'confraria pub', 888888888, 'confraria@bol.com', '111', 'Carlos', 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI', 0),
+(2, 'Gonha Lanches', 8888887, 'gonha@bol.com', '66', 'Gonha', 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...', 0),
+(3, 'Furacao Lanches', 77777777, 'furacao@bol.com', '123', 'Jorge', 'LLorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI', 0);
 
 -- --------------------------------------------------------
 
@@ -80,7 +90,17 @@ CREATE TABLE IF NOT EXISTS `favorito` (
   PRIMARY KEY (`idFavorito`),
   KEY `idUsuario` (`idUsuario`),
   KEY `idEstabelecimento` (`idEstabelecimento`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Extraindo dados da tabela `favorito`
+--
+
+INSERT INTO `favorito` (`idFavorito`, `idUsuario`, `idEstabelecimento`, `dataTime`) VALUES
+(4, 0, 0, '2023-02-14 00:39:24'),
+(2, 1, 3, '2023-02-14 00:19:57'),
+(3, 1, 1, '2023-02-14 00:27:30'),
+(5, 3, 3, '2023-02-14 00:46:41');
 
 -- --------------------------------------------------------
 
@@ -96,14 +116,16 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   `email` varchar(255) NOT NULL,
   `senha` varchar(255) NOT NULL,
   PRIMARY KEY (`idUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Extraindo dados da tabela `usuario`
 --
 
 INSERT INTO `usuario` (`idUsuario`, `nome`, `telefone`, `email`, `senha`) VALUES
-(1, 'fabio', 999999999, 'fabio@bol.com', '55');
+(1, 'fabio', 999999999, 'fabio@bol.com', '55'),
+(2, 'maria', 9999999, 'maria@bol.com', '44'),
+(3, 'pedro', 444444, 'pedro@bol.com', '11');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

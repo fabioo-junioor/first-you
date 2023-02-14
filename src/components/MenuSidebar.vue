@@ -111,7 +111,7 @@
             <div class="name">
               {{ profileName }}
             </div>
-            <div class="job">
+            <div class="job" v-if="false">
               {{ profileRole }}
             </div>
           </div>

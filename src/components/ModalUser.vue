@@ -37,7 +37,7 @@
                     placeholder="Informe seu email: "></b-form-input>
                 <b-form-input
                     v-model="form.telefone"
-                    type="fone"
+                    type="number"
                     placeholder="Informe seu telefone: "></b-form-input>
                 <b-form-input
                     v-model="form.senha"
@@ -45,7 +45,6 @@
                     placeholder="Informe sua senha: "></b-form-input>
                     <div class="buttons-login-user">
                         <b-button @click="cadastrarUser()"
-                            type="submit"
                             variant="primary">Cadastrar-se</b-button>
                         <b-button @click="reset()"
                             type="reset"
@@ -89,10 +88,10 @@ export default {
     },
     methods: {
         logarUser(){
-            var dadosLogin = {email: this.form.email, senha: this.form.senha}
-            fetch(url+'auth.php?buscarUser=1', {
+            //var dadosLogin = {email: this.form.email, senha: this.form.senha}
+            fetch(url+'authUserEstab.php?buscarUser=1', {
                 method: "POST",
-                body: JSON.stringify(dadosLogin)
+                body: JSON.stringify(this.form)
             })
                 .then((res) => res.json())
                 .then((dados) => {
@@ -138,7 +137,41 @@ export default {
 
         },
         cadastrarUser(){
-            console.log("Cadastro")
+            //var dadosLogin = {email: this.form.email, senha: this.form.senha}
+            fetch(url+'insertUserEstab.php?insertUser=1', {
+                method: "POST",
+                body: JSON.stringify(this.form)
+            })
+                .then((res) => res.json())
+                .then((dados) => {
+                    console.log("-> ", dados)
+                    if(dados[0].idUsuario == 'success'){
+                        this.alert.texto = 'Cadastrado, Efetue o login!'
+                        this.alert.tipo = 'success'
+                        this.alert.isAlert = true
+
+                        setTimeout(async () => {
+                            this.$router.go(0)
+
+                        }, 3000)        
+                    }else{
+                        if(this.form.email === "" || this.form.senha === ""){
+                            this.alert.texto = 'Preencha os campos!'
+                            this.alert.tipo = 'danger'
+                            this.alert.isAlert = true
+                            this.resetAlert()
+
+                        }else{
+                            this.alert.texto = 'Email ja cadastrado!'
+                            this.alert.tipo = 'danger'
+                            this.alert.isAlert = true
+                            this.resetAlert()
+
+                        }                           
+                    }
+
+                })
+                .catch(console.log)
             
         },
         resetAlert(){
