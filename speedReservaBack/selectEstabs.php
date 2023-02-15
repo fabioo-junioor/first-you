@@ -32,7 +32,8 @@ if(isset($_GET["buscarEstabs"])){
                               "descricao"=>$row['descricao'],
                               "favorito"=>$row['idFavorito'],
                               "agendado"=>$row['idAgendamento'],
-                              "imgSrc"=>null));
+                              "imgSrc"=>null,
+                              "statusHorario"=>"Fechado"));
     $cont++;
 
   }

@@ -143,7 +143,7 @@ import ModalEstab from './ModalEstab.vue'
       },
       menuTitle: {
         type: String,
-        default: 'Akahon',
+        default: 'First You',
       },
       menuLogo: {
         type: String,
@@ -151,7 +151,7 @@ import ModalEstab from './ModalEstab.vue'
       },
       menuIcon: {
         type: String,
-        default: 'bxl-c-plus-plus',
+        default: 'bx bxs-cookie',
       },
       isPaddingLeft: {
         type: Boolean,
@@ -237,12 +237,12 @@ import ModalEstab from './ModalEstab.vue'
       bgColor: {
         type: String,
         //default: '#11101d',
-        default: '#494949',
+        default: '#fff',
       },
       secondaryColor: {
         type: String,
         //default: '#1d1b31',
-        default: '#3a3a3a',
+        default: '#076585',
       },
       homeSectionColor: {
         type: String,
@@ -250,11 +250,11 @@ import ModalEstab from './ModalEstab.vue'
       },
       logoTitleColor: {
         type: String,
-        default: '#fff',
+        default: '#252525',
       },
       iconsColor: {
         type: String,
-        default: '#fff',
+        default: '#252525',
       },
       itemsTooltipColor: {
         type: String,
@@ -262,15 +262,15 @@ import ModalEstab from './ModalEstab.vue'
       },
       searchInputTextColor: {
         type: String,
-        default: '#fff',
+        default: '#252525',
       },
       menuItemsHoverColor: {
         type: String,
-        default: '#fff',
+        default: '#076585',
       },
       menuItemsTextColor: {
         type: String,
-        default: '#fff',
+        default: '#252525',
       },
       menuFooterTextColor: {
         type: String,
@@ -364,7 +364,7 @@ import ModalEstab from './ModalEstab.vue'
     /* overflow-y: auto; */
     width: 78px;
     background: var(--bg-color);
-    box-shadow: 3px 3px 5px #252525;
+    box-shadow: 2px 1px 10px #252525;
     /* padding: 6px 14px 0 14px; */
     z-index: 99;
     transition: all 0.5s ease;
@@ -463,7 +463,7 @@ import ModalEstab from './ModalEstab.vue'
     width: 100%;
     width: 50px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     transition: all 0.5s ease;
     background: var(--secondary-color);
   }
@@ -492,7 +492,7 @@ import ModalEstab from './ModalEstab.vue'
     display: flex;
     height: 100%;
     width: 100%;
-    border-radius: 12px;
+    border-radius: 10px;
     align-items: center;
     text-decoration: none;
     transition: all 0.4s ease;
@@ -523,7 +523,7 @@ import ModalEstab from './ModalEstab.vue'
     height: 50px;
     line-height: 50px;
     font-size: 18px;
-    border-radius: 12px;
+    border-radius: 10px;
   }
   .sidebar div.profile {
     position: relative;
@@ -583,10 +583,10 @@ import ModalEstab from './ModalEstab.vue'
   }
   .sidebar.open .profile #log_out:hover {
     opacity: 1;
-    color: red;
+    color: #fff;
   }
   .sidebar .profile #log_out:hover {
-    color: red;
+    color: #fff;
   }
   .home-section {
     position: relative;

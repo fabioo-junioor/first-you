@@ -12,12 +12,14 @@
       :favorito="card.favorito"
       :nome="card.nome"
       :descricao="card.descricao"
+      :statusHorario="card.statusHorario"
       :imgSrc= "require('../../assets/exemple/img_capa.jpg') "/>
   </div>
   <ModalAgendar
     @alertMsg="alertMsg"
-    :idEscolhido="idEscolhido"
-    :nomeEscolhido="nomeEscolhido"/>
+    :idEstabelecimento="idEstabelecimento"
+    :nomeEscolhido="nomeEscolhido"
+    :idUsuario="idUsuario"/>
 </template>
 <script>
 import CardEstab from '../../components/CardEstab.vue'
@@ -31,13 +33,15 @@ export default{
     return{
       idEscolhido: null,
       nomeEscolhido: '',
+      idUsuario: localStorage.getItem('idUserLogado'),
       estabelecimento: [        
         {
           idEstabelecimento: '',
           nome: '',
           descricao: '',
-          agendado: '0',
-          favorito: '0',
+          agendado: null,
+          favorito: null,
+          statusHorario: ''
     
         }        
       ]
@@ -45,28 +49,37 @@ export default{
   },
   methods: {
     cancelarAgendamento(idEstabelecimento){
-      console.log("Cancelou agendamento-> ", idEstabelecimento)
-      this.estabelecimento.forEach(e => {
-        if(idEstabelecimento === e.idEstabelecimento){
-          //e.agendado = !e.agendado
-
-        }
+      var dadosAgendamento = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
+      fetch(url+'insertDeleteAgendamento.php?deleteAgendamento=1', {
+        method: "POST",
+        body: JSON.stringify(dadosAgendamento)
       })
+        .then((res) => res.json())
+        .then((dados) => {
+          if(dados[0].idAgendamento == 'success'){
+            console.log("Cancelou agendamento-> ", idEstabelecimento)
+              this.estabelecimento.forEach(e => {
+                  if(e.idEstabelecimento == idEstabelecimento){
+                    e.agendado = null
+
+                  }
+              })
+            }
+        })
+          .catch(console.log)
     },
     agendar(idEstabelecimento){
-      console.log("Agendou-> ", idEstabelecimento)
       this.estabelecimento.forEach(e => {
         if(idEstabelecimento === e.idEstabelecimento){
-          this.idEscolhido = e.idEstabelecimento
+          this.idEstabelecimento = e.idEstabelecimento
           this.nomeEscolhido = e.nome
-          //e.agendado = !e.agendado
           this.$root.$emit('bv::show::modal', 'modalAgendar')
 
         }
       })
     },
     addFavorito(idEstabelecimento){
-      var dadosFavorito = {idUsuario: localStorage.getItem('idUserLogado'), idEstabelecimento: idEstabelecimento}
+      var dadosFavorito = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
       fetch(url+'insertDeleteFavorito.php?insertFavorito=1', {
         method: "POST",
         body: JSON.stringify(dadosFavorito)
@@ -75,15 +88,19 @@ export default{
         .then((dados) => {
           if(dados[0].idFavorito == 'success'){
             console.log("Favorito-> ", idEstabelecimento)
-              this.$router.go(0)
+              this.estabelecimento.forEach(e => {
+                  if(e.idEstabelecimento == idEstabelecimento){
+                    e.favorito = dados[0].idFavorito
 
+                  }
+              })
             }
         })
           .catch(console.log)
 
     },
     removeFavorito(idEstabelecimento){
-      var dadosFavorito = {idUsuario: localStorage.getItem('idUserLogado'), idEstabelecimento: idEstabelecimento}
+      var dadosFavorito = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
       fetch(url+'insertDeleteFavorito.php?deleteFavorito=1', {
         method: "POST",
         body: JSON.stringify(dadosFavorito)
@@ -92,15 +109,19 @@ export default{
         .then((dados) => {
           if(dados[0].idFavorito == 'success'){
             console.log("Removeu favorito-> ", idEstabelecimento)
-            this.$router.go(0)
+            this.estabelecimento.forEach(e => {
+                  if(e.idEstabelecimento == idEstabelecimento){
+                    e.favorito = null
 
+                  }
+              })
             }
         })
           .catch(console.log)
 
     },
     buscaEstabelecimentos(){
-      var dadosUser = {idUsuario: localStorage.getItem('idUserLogado')}
+      var dadosUser = {idUsuario: this.idUsuario}
       fetch(url+'selectEstabs.php?buscarEstabs=1', {
         method: "POST",
         body: JSON.stringify(dadosUser)
@@ -129,11 +150,13 @@ export default{
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  align-items: flex-start;
   
 }
 #inicioUser .card{
-  background-color: #494949;
-  box-shadow: 2px 2px 5px #252525;
+  background-color: #fff;
+  box-shadow: 0px 0px 15px #252525;
+  border-radius: 10px;
   
 }
 </style>

@@ -187,15 +187,20 @@ export default {
 
 </script>
 <style>
+.modal-content{
+    box-shadow: 1px 1px 5px #252525;
+    border-radius: 10px !important;
+
+}
 .modal-header h5{
-  color: #494949;
+  color: #252525;
   font-size: 1.4rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
 .modal-body{
   padding: 0;
-  background-color: #494949;
+  background-color: #fff !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -216,7 +221,7 @@ export default {
 
 }
 #loginUser form{
-    background-color: #494949;
+    background-color: #fff;
     width: 100% !important;
     padding: 1rem 1rem;
     border-radius: 5px;
@@ -232,17 +237,17 @@ export default {
 #loginUser form img{
     height: 8rem;
     margin-bottom: .8rem;
-    filter: drop-shadow(2px 2px 2px #252525)
+    filter: drop-shadow(1px 1px 3px #252525)
 
 }
 #loginUser form input{
     margin: 5px 0px;
     border: none;
-    height: 3rem;
-    border-radius: 5px;
-    background-color: #252525;
-    box-shadow: 3px 3px 0px #1b1b1b;
-    color: white;
+    height: 3.5rem;
+    border-radius: 10px;
+    background-color: #076585;
+    box-shadow: 2px 2px 5px #252525;
+    color: #fff;
 
 }
 #loginUser form input::placeholder{
@@ -261,10 +266,10 @@ export default {
 }
 #loginUser .buttons-login-user button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    box-shadow: 3px 3px 0px #252525;
+    box-shadow: 2px 2px 5px #252525;
     width: 40%;
     height: 3rem;
-    border-radius: 5px;
+    border-radius: 10px;
     
 }
 #loginUser .link-cadastrar-user{
@@ -274,13 +279,16 @@ export default {
 #loginUser .link-cadastrar-user button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1rem;
-    color: white;
+    padding: .8rem 2rem;
+    color: #252525;
     background-color: transparent;
     border: none;
+    border-radius: 10px;
     
 }
 #loginUser .link-cadastrar-user button:hover{
-    background-color: #5f5f5f;
+    background-color: #076585;
+    color: #fff;
 
 }
 </style>

@@ -1,14 +1,19 @@
 <template>
   <div id="cardEstab">
-    <div class="favoritar-estab">
-        <b-button @click="addFavorito(idEstabelecimento)"
-            v-if="!favorito">
-            <i class="bx bx-heart" />
-        </b-button>
-        <b-button @click="removeFavorito(idEstabelecimento)"
-            v-else>
-            <i class="bx bxs-heart" />
-        </b-button>
+    <div class="header-status">
+        <div class="status-horario">
+            <p>{{statusHorario}}</p>
+        </div>
+        <div class="favoritar-estab">
+            <b-button @click="addFavorito(idEstabelecimento)"
+                v-if="!favorito">
+                <i class="bx bx-heart" />
+            </b-button>
+            <b-button @click="removeFavorito(idEstabelecimento)"
+                v-else>
+                <i class="bx bxs-heart" />
+            </b-button>
+        </div>
     </div>
     <b-card
       :title="nome"
@@ -52,6 +57,7 @@ export default {
         agendado: Boolean,
         idEstabelecimento: Number,
         favorito: Boolean,
+        statusHorario: String,
         imgSrc: String
 
     },
@@ -82,11 +88,12 @@ export default {
 }
 #cardEstab .card-title{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white;
+    color: #252525;
     text-align: center;
     padding: 5px;
     font-size: 1.3rem;
-    filter: drop-shadow(2px 2px 2px #252525);
+    filter: drop-shadow(0px 0px 3px #868686);
+    margin-top: .5rem;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -96,15 +103,32 @@ export default {
 
 }
 #cardEstab article{
-    border: 1px solid white;
+    border: none;
     margin: 5px;
+    box-shadow: 0px 0px 3px #252525 !important;
+    overflow: hidden;
 
 }
-#cardEstab .card-text{
+#cardEstab article img{
+    max-height: 50%;
+    max-width: 100%;
+	-moz-transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	transition: all 0.3s;
+    
+}
+#cardEstab article img:hover{
+    -moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
+
+}
+    #cardEstab .card-text{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: white;
+    color: #252525;
     text-align: justify;
     font-size: 1rem;
+
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -128,6 +152,7 @@ export default {
     font-size: .8rem;
     font-weight: bold;
     padding: .5rem 1rem;
+    box-shadow: 0px 0px 5px #252525;
 
 }
 #cardEstab .card-body div .btn:nth-child(1){
@@ -144,9 +169,24 @@ export default {
     color: white;
     
 }
-#cardEstab .favoritar-estab{
+#cardEstab .header-status{
     display: flex;
-    justify-content: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+#cardEstab .header-status .status-horario{
+    display: flex;
+    align-items: center;
+    width: 60%;
+    
+}
+#cardEstab .header-status .status-horario p{
+    margin: .3rem .5rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: .9rem;
+    font-weight: bold;
+    color: #076585;
 
 }
 #cardEstab .favoritar-estab button{
@@ -154,11 +194,42 @@ export default {
     padding: 0;
     background-color: transparent;
     border: none;
+    width: 40%;
 
 }
 #cardEstab .favoritar-estab i{
     font-size: 2rem;
-    color: white;
+    color: #076585;
     
+}
+@media only screen and (max-width: 500px){
+    #cardEstab{
+      max-width: 15rem;
+    
+    }
+    #cardEstab .card-title{
+    font-size: 1rem;
+
+    }
+    #cardEstab .card-text{
+        font-size: .8rem;
+
+    }
+    #cardEstab .card-body div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    }
+    #cardEstab .card-body .btn{
+        font-size: .9rem;
+        padding: .5rem;
+        margin: .5rem 0;
+
+    }
+    #cardEstab .favoritar-estab i{
+        font-size: 1.8rem;
+           
+    }
 }
 </style>
