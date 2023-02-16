@@ -24,7 +24,7 @@ const routes = [
         name: "configuracoes",
         component: Configuracoes,
         beforeEnter: (_, __, next) => {
-            const idUserLogado = localStorage.getItem('idUserLogado')
+            const idUserLogado = localStorage.getItem('idUserLogado') == '1' ? true : false
             if(idUserLogado){
                 next()
                 return
@@ -39,7 +39,8 @@ const routes = [
         name: "inicioUser",
         component: InicioUser,
         beforeEnter: (_, __, next) => {
-            const idUserLogado = localStorage.getItem('idUserLogado')
+            const idUserLogado = localStorage.getItem('idUserLogado') == '1' ? true : false
+            console.log(idUserLogado)
             if(idUserLogado){
                 next()
                 return
