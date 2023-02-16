@@ -60,6 +60,7 @@
 <script>
 import Alert from '../components/Alert.vue'
 import url from '../config/global.js'
+import { signIn } from '../config/auth.js'
 
 export default {
     name: "ModalUser",
@@ -107,9 +108,9 @@ export default {
                         this.$store.commit('loginUser', dados)
                         this.$store.commit('navVisible', '2')
                         setTimeout(async () => {
-                            this.reset()
+                            //signIn(this.form.email, this.form.senha)
                             await this.$router.push({path: '/inicioUser'})
-                            this.$router.go(0)
+                            await this.$router.go(0)
     
                         }, 3000)        
                     }else{
@@ -146,7 +147,7 @@ export default {
                         this.alert.texto = 'Cadastrado, Efetue o login!'
                         this.alert.tipo = 'success'
                         this.alert.isAlert = true
-                        setTimeout(async () => {
+                        setTimeout(() => {
                             this.reset()
                             this.$router.go(0)
 

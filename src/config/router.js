@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
+import { isSignedIn } from './auth'
 
 import Sobre from '../pages/Apresentacao/Sobre.vue'
 
@@ -21,12 +22,32 @@ const routes = [
     {
         path: "/configuracoes",
         name: "configuracoes",
-        component: Configuracoes
+        component: Configuracoes,
+        beforeEnter: (_, __, next) => {
+            const idUserLogado = localStorage.getItem('idUserLogado')
+            if(idUserLogado){
+                next()
+                return
+
+            }
+            next('/*')
+
+        }
     },
     {
         path: "/inicioUser",
         name: "inicioUser",
-        component: InicioUser
+        component: InicioUser,
+        beforeEnter: (_, __, next) => {
+            const idUserLogado = localStorage.getItem('idUserLogado')
+            if(idUserLogado){
+                next()
+                return
+
+            }
+            next('/*')
+
+        }
     },
     {
         path: '/*',

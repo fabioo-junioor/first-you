@@ -132,7 +132,6 @@ export default{
         .then((dados) => {
           console.log("-> ", dados)
           this.estabelecimento = dados
-          console.log("--> ", this.estabelecimento)
         
         })
           .catch(console.log)

@@ -107,7 +107,8 @@
             v-else
             class="bx bxs-user-rectangle"
           />
-          <div class="name_job" v-if="buttonsInOut === '2' || buttonsInOut === '3'">
+          <div class="name_job"
+            v-if="buttonsInOut === '2' || buttonsInOut === '3'">
             <div class="name">
               {{ profileName }}
             </div>
@@ -174,14 +175,14 @@ import ModalEstab from './ModalEstab.vue'
             name: 'Inicio',
             tooltip: 'Inicio Apresentacao',
             icon: 'bx bx-home-alt',
-            type: '1' || null
+            type: '1'
           },
           {
             link: '/sobre',
             name: 'Sobre',
             tooltip: 'Sobre',
             icon: 'bx bx-info-circle',
-            type: '1' || null
+            type: '1'
           },
           {
             link: '/inicioUser',
@@ -292,10 +293,23 @@ import ModalEstab from './ModalEstab.vue'
     },
     methods: {
       atualizaStatus(){
-        this.typeLogin = this.$store.state.typeLogin
-        this.buttonsInOut = this.$store.state.buttonsInOut
-        //console.log("wt ", this.$store.state.typeLogin, this.buttonsInOut)
-        //console.log(this.$store.state.buttonsInOut)
+        if(!localStorage.getItem('typeLogin')){
+          this.typeLogin = '1'
+          this.buttonsInOut = '1'
+          
+        }else if(localStorage.getItem('typeLogin') === '1'){
+          this.typeLogin = '1'
+          this.buttonsInOut = '1'
+
+        }else if(localStorage.getItem('typeLogin') === '2'){
+          this.typeLogin = '2'
+          this.buttonsInOut = '2'
+
+        }else if(localStorage.getItem('typeLogin') === '3'){
+          this.typeLogin = '3'
+          this.buttonsInOut = '3'
+
+        }
 
 
       },
@@ -497,18 +511,20 @@ import ModalEstab from './ModalEstab.vue'
     text-decoration: none;
     transition: all 0.4s ease;
     background: var(--bg-color);
+    
   }
   .sidebar li a:hover {
     background: var(--menu-items-hover-color);
   }
   .sidebar li a .links_name {
     color: var(--menu-items-text-color);
-    font-size: 15px;
+    font-size: .8rem;
     font-weight: 400;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: 0.4s;
+    
   }
   .sidebar.open li a .links_name {
     opacity: 1;
@@ -524,6 +540,7 @@ import ModalEstab from './ModalEstab.vue'
     line-height: 50px;
     font-size: 18px;
     border-radius: 10px;
+    
   }
   .sidebar div.profile {
     position: relative;
