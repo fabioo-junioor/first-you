@@ -31,7 +31,7 @@
 </template>
 <script>
 import Alert from '../components/Alert.vue'
-const url = "http://localhost/speedreservaback/"
+import url from '../config/global.js'
 
 export default {
   name: "ModalAgendar",
@@ -72,8 +72,8 @@ export default {
         })
           .then((res) => res.json())
           .then((dados) => {
-            if(dados[0].idAgendamento == 'success'){
-              console.log("Agendado em -> ", idEstabelecimento)
+            if(dados[0].idAgendamento === 1){
+              console.log("Agendado em -> ", idEstabelecimento, dados)
                 setTimeout(async () => {
                   this.$router.go(0)
 

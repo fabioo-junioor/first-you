@@ -5,15 +5,15 @@
       class="card"
       @cancelarAgendamento="cancelarAgendamento"
       @agendar="agendar"
-      @addFavorito="addFavorito"
-      @removeFavorito="removeFavorito"
+      @adicionarFavorito="adicionarFavorito"
+      @removerFavorito="removerFavorito"
       :idEstabelecimento="card.idEstabelecimento"
       :agendado="card.agendado"
       :favorito="card.favorito"
       :nome="card.nome"
       :descricao="card.descricao"
-      :statusHorario="card.statusHorario"
-      :imgSrc= "require('../../assets/exemple/img_capa.jpg') "/>
+      :imgSrc= "require('../../assets/exemple/img_capa.jpg')"
+      :isClosed="card.isClosed"/>
   </div>
   <ModalAgendar
     @alertMsg="alertMsg"
@@ -24,50 +24,31 @@
 <script>
 import CardEstab from '../../components/CardEstab.vue'
 import ModalAgendar from '../../components/ModalAgendar.vue'
-const url = "http://localhost/speedreservaback/"
+import url from '../../config/global.js'
 
 export default{
   name: "InicioUser",
   components: {CardEstab, ModalAgendar},
   data(){
     return{
-      idEscolhido: null,
+      idEstabelecimento: null,
       nomeEscolhido: '',
       idUsuario: localStorage.getItem('idUserLogado'),
       estabelecimento: [        
         {
-          idEstabelecimento: '',
+          idEstabelecimento: null,
           nome: '',
           descricao: '',
           agendado: null,
           favorito: null,
-          statusHorario: ''
+          imgSrc: '',
+          isClosed: null
     
-        }        
+        }
       ]
     }
   },
   methods: {
-    cancelarAgendamento(idEstabelecimento){
-      var dadosAgendamento = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
-      fetch(url+'insertDeleteAgendamento.php?deleteAgendamento=1', {
-        method: "POST",
-        body: JSON.stringify(dadosAgendamento)
-      })
-        .then((res) => res.json())
-        .then((dados) => {
-          if(dados[0].idAgendamento == 'success'){
-            console.log("Cancelou agendamento-> ", idEstabelecimento)
-              this.estabelecimento.forEach(e => {
-                  if(e.idEstabelecimento == idEstabelecimento){
-                    e.agendado = null
-
-                  }
-              })
-            }
-        })
-          .catch(console.log)
-    },
     agendar(idEstabelecimento){
       this.estabelecimento.forEach(e => {
         if(idEstabelecimento === e.idEstabelecimento){
@@ -78,7 +59,28 @@ export default{
         }
       })
     },
-    addFavorito(idEstabelecimento){
+    cancelarAgendamento(idEstabelecimento){
+      var dadosAgendamento = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
+      fetch(url+'insertDeleteAgendamento.php?deleteAgendamento=1', {
+        method: "POST",
+        body: JSON.stringify(dadosAgendamento)
+      })
+        .then((res) => res.json())
+        .then((dados) => {
+          if(dados[0].idAgendamento === 1){
+            console.log("Cancelou agendamento-> ", idEstabelecimento, dados)
+              this.estabelecimento.forEach(e => {
+                  if(e.idEstabelecimento == idEstabelecimento){
+                    e.agendado = null
+
+                  }
+              })
+            }
+        })
+          .catch(console.log)
+
+    },
+    adicionarFavorito(idEstabelecimento){
       var dadosFavorito = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
       fetch(url+'insertDeleteFavorito.php?insertFavorito=1', {
         method: "POST",
@@ -86,7 +88,7 @@ export default{
       })
         .then((res) => res.json())
         .then((dados) => {
-          if(dados[0].idFavorito == 'success'){
+          if(dados[0].idFavorito === 1){
             console.log("Favorito-> ", idEstabelecimento)
               this.estabelecimento.forEach(e => {
                   if(e.idEstabelecimento == idEstabelecimento){
@@ -99,7 +101,7 @@ export default{
           .catch(console.log)
 
     },
-    removeFavorito(idEstabelecimento){
+    removerFavorito(idEstabelecimento){
       var dadosFavorito = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
       fetch(url+'insertDeleteFavorito.php?deleteFavorito=1', {
         method: "POST",
@@ -107,7 +109,7 @@ export default{
       })
         .then((res) => res.json())
         .then((dados) => {
-          if(dados[0].idFavorito == 'success'){
+          if(dados[0].idFavorito === 1){
             console.log("Removeu favorito-> ", idEstabelecimento)
             this.estabelecimento.forEach(e => {
                   if(e.idEstabelecimento == idEstabelecimento){

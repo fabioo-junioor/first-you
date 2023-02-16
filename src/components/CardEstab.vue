@@ -2,14 +2,15 @@
   <div id="cardEstab">
     <div class="header-status">
         <div class="status-horario">
-            <p>{{statusHorario}}</p>
+            <p v-if="!isClosed">Fechado</p>
+            <p v-else>Aberto</p>
         </div>
         <div class="favoritar-estab">
-            <b-button @click="addFavorito(idEstabelecimento)"
+            <b-button @click="adicionarFavorito(idEstabelecimento)"
                 v-if="!favorito">
                 <i class="bx bx-heart" />
             </b-button>
-            <b-button @click="removeFavorito(idEstabelecimento)"
+            <b-button @click="removerFavorito(idEstabelecimento)"
                 v-else>
                 <i class="bx bxs-heart" />
             </b-button>
@@ -29,13 +30,16 @@
             <i class="bx bx-info-circle"/>
         </b-button>
         <b-button
-            @click="agendar(idEstabelecimento)"
             v-if="!agendado"
-            variant="outline-success">Agendar         
+            @click="agendar(idEstabelecimento)"
+            :disabled="!isClosed"
+            variant="outline-success">Agendar  
         </b-button>
-        <b-button v-else
+        <b-button
+            v-else
             @click="cancelarAgendamento(idEstabelecimento)"
-            variant="outline-success">Cancelar Agendamento</b-button>
+            variant="outline-success">Cancelar Agendamento
+        </b-button>
       </div>
     </b-card>
   </div>
@@ -52,13 +56,13 @@ export default {
         }
     },
     props: {
+        idEstabelecimento: Number,
         nome: String,
         descricao: String,
-        agendado: Boolean,
-        idEstabelecimento: Number,
-        favorito: Boolean,
-        statusHorario: String,
-        imgSrc: String
+        agendado: Number,
+        favorito: Number,
+        imgSrc: String,
+        isClosed: Number
 
     },
     methods: {
@@ -70,12 +74,12 @@ export default {
             this.$emit('agendar', idEstabelecimento)
 
         },
-        addFavorito(idEstabelecimento){
-            this.$emit('addFavorito', idEstabelecimento)
+        adicionarFavorito(idEstabelecimento){
+            this.$emit('adicionarFavorito', idEstabelecimento)
 
         },
-        removeFavorito(idEstabelecimento){
-            this.$emit('removeFavorito', idEstabelecimento)
+        removerFavorito(idEstabelecimento){
+            this.$emit('removerFavorito', idEstabelecimento)
             
         }
     }

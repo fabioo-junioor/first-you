@@ -21,9 +21,8 @@
                     <div class="buttons-login-user">
                         <b-button @click="logarUser()"                            
                             variant="primary">Acessar</b-button>
-                        <b-button @click="reset()"
-                            type="reset"
-                            variant="danger">Resetar</b-button>
+                        <b-button @click="logar = !logar, reset()"
+                            variant="secondary">Cadastre-se</b-button>
                     </div>
             </div>
             <div v-show="!logar">
@@ -45,15 +44,13 @@
                     placeholder="Informe sua senha: "></b-form-input>
                     <div class="buttons-login-user">
                         <b-button @click="cadastrarUser()"
-                            variant="primary">Cadastrar-se</b-button>
-                        <b-button @click="reset()"
-                            type="reset"
-                            variant="danger">Resetar</b-button>
+                            variant="primary">Salvar</b-button>
+                        <b-button @click="logar = !logar, reset()"
+                            variant="secondary">Fazer login</b-button>
                     </div>
             </div>
-                <div class="link-cadastrar-user">
-                    <b-button @click="logar = !logar,  reset()" v-if="logar">Cadastre-se</b-button>
-                    <b-button @click="logar = !logar, reset()" v-else>Fazer Login</b-button>
+                <div class="link-esqueceu-senha">
+                    <b-button v-if="logar">Esqueceu sua senha?</b-button>
                 </div>
                 
         </b-form>
@@ -62,7 +59,7 @@
 </template>
 <script>
 import Alert from '../components/Alert.vue'
-const url = "http://localhost/speedreservaback/"
+import url from '../config/global.js'
 
 export default {
     name: "ModalUser",
@@ -72,7 +69,7 @@ export default {
             form: {
                 nome: '',
                 email: '',
-                telefone: '',
+                telefone: null,
                 senha: ''
 
             },
@@ -88,91 +85,85 @@ export default {
     },
     methods: {
         logarUser(){
-            //var dadosLogin = {email: this.form.email, senha: this.form.senha}
-            fetch(url+'authUserEstab.php?buscarUser=1', {
-                method: "POST",
-                body: JSON.stringify(this.form)
-            })
-                .then((res) => res.json())
-                .then((dados) => {
+            if(this.form.email === "" || this.form.senha === ""){
+                this.alert.texto = 'Preencha os campos!'
+                this.alert.tipo = 'danger'
+                this.alert.isAlert = true
+                this.resetAlert()
+
+            }else{
+                fetch(url+'authUserEstab.php?buscarUser=1', {
+                    method: "POST",
+                    body: JSON.stringify(this.form)
+                })
+                    .then((res) => res.json())
+                    .then((dados) => {
                     console.log("-> ", dados)
-                    if(dados[0].idUsuario != 'null'){
+                    if(dados[0].idUsuario != null){
                         this.alert.texto = 'Bem vindo!'
                         this.alert.tipo = 'success'
                         this.alert.isAlert = true
-
+    
                         this.$store.commit('loginUser', dados)
                         this.$store.commit('navVisible', '2')
                         setTimeout(async () => {
+                            this.reset()
                             await this.$router.push({path: '/inicioUser'})
                             this.$router.go(0)
-
+    
                         }, 3000)        
                     }else{
-                        if(this.form.email === "" || this.form.senha === ""){
-                            this.alert.texto = 'Preencha os campos!'
-                            this.alert.tipo = 'danger'
-                            this.alert.isAlert = true
-                            this.resetAlert()
-
-                        }else{
-                            this.alert.texto = 'Email ou Senha incorretos!'
-                            this.alert.tipo = 'danger'
-                            this.alert.isAlert = true
-                            this.resetAlert()
-
-                        }                           
-                    }
-
+                        this.alert.texto = 'Email ou Senha incorretos!'
+                        this.alert.tipo = 'danger'
+                        this.alert.isAlert = true
+                        this.reset()
+                        this.resetAlert()
+                               
+                    }    
                 })
-                .catch(console.log)
-
-        },
-        reset(){
-            this.form.nome = ''
-            this.form.email = ''
-            this.form.senha = ''
-            this.form.telefone = ''
-            console.log('Resetou')
+                    .catch(console.log)
+                
+            }
 
         },
         cadastrarUser(){
-            //var dadosLogin = {email: this.form.email, senha: this.form.senha}
-            fetch(url+'insertUserEstab.php?insertUser=1', {
-                method: "POST",
-                body: JSON.stringify(this.form)
-            })
-                .then((res) => res.json())
-                .then((dados) => {
+            if(this.form.email === "" || this.form.senha === "" || this.form.nome === "" || this.form.telefone === null){
+                this.alert.texto = 'Preencha os campos!'
+                this.alert.tipo = 'danger'
+                this.alert.isAlert = true
+                this.reset()
+                this.resetAlert()
+            
+            }else{
+                fetch(url+'insertUserEstab.php?insertUser=1', {
+                    method: "POST",
+                    body: JSON.stringify(this.form)
+                })
+                    .then((res) => res.json())
+                    .then((dados) => {
                     console.log("-> ", dados)
                     if(dados[0].idUsuario == 'success'){
                         this.alert.texto = 'Cadastrado, Efetue o login!'
                         this.alert.tipo = 'success'
                         this.alert.isAlert = true
-
                         setTimeout(async () => {
+                            this.reset()
                             this.$router.go(0)
 
                         }, 3000)        
+
                     }else{
-                        if(this.form.email === "" || this.form.senha === ""){
-                            this.alert.texto = 'Preencha os campos!'
-                            this.alert.tipo = 'danger'
-                            this.alert.isAlert = true
-                            this.resetAlert()
+                        this.alert.texto = 'Email ja cadastrado!'
+                        this.alert.tipo = 'danger'
+                        this.alert.isAlert = true
+                        this.reset()
+                        this.resetAlert()
 
-                        }else{
-                            this.alert.texto = 'Email ja cadastrado!'
-                            this.alert.tipo = 'danger'
-                            this.alert.isAlert = true
-                            this.resetAlert()
-
-                        }                           
                     }
-
                 })
-                .catch(console.log)
-            
+                    .catch(console.log)
+
+            }            
         },
         resetAlert(){
             setTimeout(() => {
@@ -181,7 +172,15 @@ export default {
                 this.alert.isAlert = false
 
             }, 3000)
-        }
+        },
+        reset(){
+            this.form.nome = ''
+            this.form.email = ''
+            this.form.senha = ''
+            this.form.telefone = null
+            console.log('Resetou')
+
+        },
     }
 }
 
@@ -272,23 +271,24 @@ export default {
     border-radius: 10px;
     
 }
-#loginUser .link-cadastrar-user{
+#loginUser .link-esqueceu-senha{
     margin: 1rem 0;
 
 }
-#loginUser .link-cadastrar-user button{
+#loginUser .link-esqueceu-senha button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1rem;
+    font-size: .8rem;
     padding: .8rem 2rem;
     color: #252525;
+    font-weight: bold;
     background-color: transparent;
     border: none;
     border-radius: 10px;
     
 }
-#loginUser .link-cadastrar-user button:hover{
-    background-color: #076585;
-    color: #fff;
+#loginUser .link-esqueceu-senha button:hover{
+    color: red;
+    font-weight: bold;
 
 }
 </style>
