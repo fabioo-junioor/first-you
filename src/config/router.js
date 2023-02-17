@@ -1,36 +1,88 @@
 import { createRouter, createWebHistory } from "vue-router"
-import { isSignedIn } from './auth'
 
+import InicioApre from '../pages/Apresentacao/InicioApre.vue'
 import Sobre from '../pages/Apresentacao/Sobre.vue'
 
 import InicioEstab from '../pages/Estabelecimento/InicioEstab.vue'
-import Configuracoes from '../pages/Estabelecimento/Configuracoes.vue'
+import ConfigEstab from '../pages/Estabelecimento/Configuracoes.vue'
+import Dashboard from '../pages/Estabelecimento/Dashboard.vue'
 
 import InicioUser from '../pages/Usuario/InicioUser.vue'
+import ConfigUser from '../pages/Usuario/Configuracoes.vue'
 
 const routes = [
     {
-        path: "/sobre",
-        name: "sobre",
-        component: Sobre
-    },
-    {
-        path: "/inicioEstab",
-        name: "inicioEstab",
-        component: InicioEstab
-    },
-    {
-        path: "/configuracoes",
-        name: "configuracoes",
-        component: Configuracoes,
+        path: "/inicioApre",
+        name: "inicioApre",
+        component: InicioApre,
         beforeEnter: (_, __, next) => {
-            const idUserLogado = localStorage.getItem('idUserLogado') == '1' ? true : false
+            const idUserLogado = localStorage.getItem('typeLogin') == '1' || localStorage.getItem('typeLogin') == null ? true : false
             if(idUserLogado){
                 next()
                 return
 
             }
-            next('/*')
+            history.go(-1)
+            
+        }
+    },
+    {
+        path: "/sobre",
+        name: "sobre",
+        component: Sobre,
+        beforeEnter: (_, __, next) => {
+            const idUserLogado = localStorage.getItem('typeLogin') == '1' || localStorage.getItem('typeLogin') == null ? true : false
+            if(idUserLogado){
+                next()
+                return
+
+            }
+            history.go(-1)
+            
+        }
+    },
+    {
+        path: "/inicioEstab",
+        name: "inicioEstab",
+        component: InicioEstab,
+        beforeEnter: (_, __, next) => {
+            const idUserLogado = localStorage.getItem('typeLogin') == '3' ? true : false
+            if(idUserLogado){
+                next()
+                return
+
+            }
+            history.go(-1)
+
+        }
+    },
+    {
+        path: "/configEstab",
+        name: "configEstab",
+        component: ConfigEstab,
+        beforeEnter: (_, __, next) => {
+            const idUserLogado = localStorage.getItem('typeLogin') == '3' ? true : false
+            if(idUserLogado){
+                next()
+                return
+
+            }
+            history.go(-1)
+
+        }
+    },
+    {
+        path: "/dashboard",
+        name: "dashboard",
+        component: Dashboard,
+        beforeEnter: (_, __, next) => {
+            const idUserLogado = localStorage.getItem('typeLogin') == '3' ? true : false
+            if(idUserLogado){
+                next()
+                return
+
+            }
+            history.go(-1)
 
         }
     },
@@ -39,21 +91,38 @@ const routes = [
         name: "inicioUser",
         component: InicioUser,
         beforeEnter: (_, __, next) => {
-            const idUserLogado = localStorage.getItem('idUserLogado') == '1' ? true : false
-            console.log(idUserLogado)
+            const idUserLogado = localStorage.getItem('typeLogin') == '2' ? true : false
             if(idUserLogado){
                 next()
                 return
 
             }
-            next('/*')
+            history.go(-1)
+
+        }
+    },
+    {
+        path: "/configUser",
+        name: "configUser",
+        component: ConfigUser,
+        beforeEnter: (_, __, next) => {
+            const idUserLogado = localStorage.getItem('typeLogin') == '2' ? true : false
+            if(idUserLogado){
+                next()
+                return
+
+            }
+            history.go(-1)
 
         }
     },
     {
         path: '/*',
-        name: 'app',
         redirect: '/'
+    },
+    {
+        path: '/',
+        redirect: '/inicioApre'
     }
 ]
 

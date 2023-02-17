@@ -1,12 +1,12 @@
 <template>
-  <div id="configEstab">
-    <h1>Configuracoes Estabelecimento</h1>
+  <div id="configUser">
+    <h1>Configuracoes Usuario</h1>
   </div>
 </template>
 <script>
 </script>
 <style>
-#configEstab {
+#configUser {
   width: 100%;
   height: 100%;
   display: flex;

@@ -108,7 +108,6 @@ export default {
                         this.$store.commit('loginUser', dados)
                         this.$store.commit('navVisible', '2')
                         setTimeout(async () => {
-                            //signIn(this.form.email, this.form.senha)
                             await this.$router.push({path: '/inicioUser'})
                             await this.$router.go(0)
     
@@ -117,7 +116,6 @@ export default {
                         this.alert.texto = 'Email ou Senha incorretos!'
                         this.alert.tipo = 'danger'
                         this.alert.isAlert = true
-                        this.reset()
                         this.resetAlert()
                                
                     }    
@@ -132,7 +130,6 @@ export default {
                 this.alert.texto = 'Preencha os campos!'
                 this.alert.tipo = 'danger'
                 this.alert.isAlert = true
-                this.reset()
                 this.resetAlert()
             
             }else{

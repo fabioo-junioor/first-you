@@ -100,7 +100,6 @@ export default {
                 this.alert.isAlert = true
 
                 this.$store.commit('navVisible', '3')
-                console.log("// ", this.$store.state.typeLogin)
                 this.$router.push({path: '/inicioEstab'})
                 setTimeout(() => {
                     this.$router.go(0)

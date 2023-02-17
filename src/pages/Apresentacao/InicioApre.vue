@@ -1,21 +1,17 @@
 <template>
   <div id="inicioApre">
-    <MenuSidebar />
-    <router-view />
+    <h1>Inicio Apresentação</h1>
   </div>
 </template>
 <script>
-import MenuSidebar from '../../components/MenuSidebar.vue'
 
 export default {
   name: "InicioApre",
-  components: {MenuSidebar},
   data(){
     return{
       
     }
   }
-
 }
 </script>
 <style>

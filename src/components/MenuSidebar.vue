@@ -171,7 +171,7 @@ import ModalEstab from './ModalEstab.vue'
         type: Array,
         default: () => [
           {
-            link: '/',
+            link: '/inicioApre',
             name: 'Inicio',
             tooltip: 'Inicio Apresentacao',
             icon: 'bx bx-home-alt',
@@ -192,11 +192,32 @@ import ModalEstab from './ModalEstab.vue'
             type: '2'
           },
           {
-            link: '/configuracoes',
+            link: '/configUser',
             name: 'Configurações',
-            tooltip: 'Setting',
+            tooltip: 'Configurações Usuario',
             icon: 'bx-cog',
             type: '2'
+          },
+          {
+            link: '/inicioEstab',
+            name: 'Inicio',
+            tooltip: 'Inicio Estabelecimento',
+            icon: 'bx bx-home-alt',
+            type: '3'
+          },
+          {
+            link: '/configEstab',
+            name: 'Configurações',
+            tooltip: 'Configurações Estabelecimento',
+            icon: 'bx-cog',
+            type: '3'
+          },
+          {
+            link: '/dashboard',
+            name: 'Dashboard',
+            tooltip: 'dashboard',
+            icon: 'bx bxs-dashboard',
+            type: '3'
           },
         ],
       },
@@ -293,7 +314,7 @@ import ModalEstab from './ModalEstab.vue'
     },
     methods: {
       atualizaStatus(){
-        if(!localStorage.getItem('typeLogin')){
+        if(localStorage.getItem('typeLogin') == null){
           this.typeLogin = '1'
           this.buttonsInOut = '1'
           
@@ -315,10 +336,9 @@ import ModalEstab from './ModalEstab.vue'
       },
       buttonExitClicked(){
         this.$store.commit('logoutUser')
-        this.$store.commit('navVisible', '1')
         setTimeout(async () => {
           await this.$router.push({path: '/'})
-          this.$router.go(0)
+          await this.$router.go(0)
 
         }, 1000)
       }

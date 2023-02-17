@@ -1,13 +1,16 @@
 <template>
-    <div id="sobre">
-        <h1>Sobre</h1>
+    <div id="dashboardEstab">
+        <h1>Dashboard</h1>
     </div>
 </template>
 <script>
 
+export default {
+    
+}
 </script>
 <style>
-#sobre{
+#dashboardEstab{
     width: 100%;
     height: 100%;
     display: flex;

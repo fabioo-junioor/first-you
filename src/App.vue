@@ -1,14 +1,15 @@
 <template>
   <div id="app">
-    <InicioApre />
+    <MenuSidebar />
+    <router-view />
   </div>
 </template>
 <script>
-import InicioApre from './pages/Apresentacao/InicioApre.vue'
+import MenuSidebar from './components/MenuSidebar.vue'
 
 export default{
   name: "App",
-  components: {InicioApre},
+  components: {MenuSidebar},
   data(){
     return{
 
@@ -25,6 +26,8 @@ export default{
 #app{
   width: 100%;
   height: 100%;
-
+  display: flex;
+  justify-content: center;
+  
 }
 </style>

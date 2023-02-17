@@ -87,7 +87,7 @@ export default {
 </script>
 <style>
 #cardEstab{
-    margin: 1rem .1rem;
+    margin: .5rem 1rem;
 
 }
 #cardEstab .card-title{
