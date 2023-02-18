@@ -1,5 +1,9 @@
 <template>
   <div id="inicioUser">
+    <Alert :texto=alert.texto 
+          :tipo=alert.tipo
+          class="alert-agend-favor"
+          v-if="alert.isAlert"/>
     <CardEstab
       v-for=" card in estabelecimento" :key="card"
       class="card"
@@ -24,11 +28,12 @@
 <script>
 import CardEstab from '../../components/CardEstab.vue'
 import ModalAgendar from '../../components/ModalAgendar.vue'
+import Alert from '../../components/Alert.vue'
 import url from '../../config/global.js'
 
 export default{
   name: "InicioUser",
-  components: {CardEstab, ModalAgendar},
+  components: {CardEstab, ModalAgendar, Alert},
   data(){
     return{
       idEstabelecimento: null,
@@ -45,7 +50,13 @@ export default{
           isClosed: null
     
         }
-      ]
+      ],
+      alert: {
+        isAlert: false,
+        texto: '',
+        tipo: ''
+
+      }
     }
   },
   methods: {
@@ -60,6 +71,7 @@ export default{
       })
     },
     cancelarAgendamento(idEstabelecimento){
+      this.resetAlert()
       var dadosAgendamento = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
       fetch(url+'insertDeleteAgendamento.php?deleteAgendamento=1', {
         method: "POST",
@@ -72,6 +84,7 @@ export default{
               this.estabelecimento.forEach(e => {
                   if(e.idEstabelecimento == idEstabelecimento){
                     e.agendado = null
+                    this.alertActive('Agendamento cancelado', 'info')
 
                   }
               })
@@ -81,6 +94,7 @@ export default{
 
     },
     adicionarFavorito(idEstabelecimento){
+      this.resetAlert()
       var dadosFavorito = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
       fetch(url+'insertDeleteFavorito.php?insertFavorito=1', {
         method: "POST",
@@ -89,19 +103,23 @@ export default{
         .then((res) => res.json())
         .then((dados) => {
           if(dados[0].idFavorito === 1){
-            console.log("Favorito-> ", idEstabelecimento)
+            console.log("Favorito-> ", idEstabelecimento, dados)
               this.estabelecimento.forEach(e => {
                   if(e.idEstabelecimento == idEstabelecimento){
                     e.favorito = dados[0].idFavorito
+                    this.alertActive('Like ' + e.nome, 'info')
 
                   }
               })
+              
+
             }
         })
           .catch(console.log)
 
     },
     removerFavorito(idEstabelecimento){
+      this.resetAlert()
       var dadosFavorito = {idUsuario: this.idUsuario, idEstabelecimento: idEstabelecimento}
       fetch(url+'insertDeleteFavorito.php?deleteFavorito=1', {
         method: "POST",
@@ -114,6 +132,7 @@ export default{
             this.estabelecimento.forEach(e => {
                   if(e.idEstabelecimento == idEstabelecimento){
                     e.favorito = null
+                    this.alertActive('Dislike ' + e.nome, 'info')
 
                   }
               })
@@ -135,6 +154,23 @@ export default{
         
         })
           .catch(console.log)
+
+    },
+    alertMsg(alertMsg){
+      this.resetAlert()
+      this.alertActive('Agendado! ', 'info')
+
+    },
+    alertActive(msg, tipo){
+      this.alert.texto = msg
+      this.alert.tipo = tipo
+      this.alert.isAlert = true
+
+    },
+    resetAlert(){
+      this.alert.texto = ''
+      this.alert.tipo = ''
+      this.alert.isAlert = false
 
     }
   },
@@ -159,5 +195,13 @@ export default{
   box-shadow: 0px 0px 15px #252525;
   border-radius: 10px;
   
+}
+#inicioUser .alert-agend-favor{
+  position: absolute;
+  top: .8rem;
+  right: .8rem;
+  width: 20%;
+  z-index: 1;
+
 }
 </style>

@@ -23,19 +23,13 @@
         </div>
       </b-form>
     </div>
-    <Alert :texto=alert.texto 
-            :tipo=alert.tipo
-            class="alert-user"
-            v-if="alert.isAlert"/>
   </b-modal>
 </template>
 <script>
-import Alert from '../components/Alert.vue'
 import url from '../config/global.js'
 
 export default {
   name: "ModalAgendar",
-  components: {Alert},
   props: {
     idEstabelecimento: Number,
     nomeEscolhido: String,
@@ -48,13 +42,7 @@ export default {
         qtdPessoas: null,
         observacao: '',
         
-        },
-        alert: {
-            isAlert: false,
-            texto: '',
-            tipo: ''
-
-        }
+      }
     }
   },
   methods: {
@@ -74,13 +62,18 @@ export default {
           .then((dados) => {
             if(dados[0].idAgendamento === 1){
               console.log("Agendado em -> ", idEstabelecimento, dados)
+                this.alertMsg(true)
                 setTimeout(async () => {
                   this.$router.go(0)
 
-              }, 2000) 
+              }, 3000) 
             }
           })
             .catch(console.log)
+
+    },
+    alertMsg(alertMsg){
+      this.$emit('alertMsg', alertMsg)
 
     },
     reset() {
@@ -88,15 +81,9 @@ export default {
       this.form.observacao = "";
       console.log("Resetou");
 
-    },
-    alertAgendar(){
-        this.alert.texto = 'Agendado'
-        this.alert.tipo = 'success'
-        this.alert.isAlert = true
-
     }
-  },
-};
+  }
+}
 </script>
 <style>
 .modal-header h5 {
