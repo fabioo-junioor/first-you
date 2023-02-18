@@ -16,7 +16,7 @@ export default {
 </script>
 <style>
 #inicioApre {
-  width: 100%;
+  width: 85%;
   height: 100%;
   display: flex;
   justify-content: center;

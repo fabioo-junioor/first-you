@@ -9,7 +9,7 @@
             <div>
                 <img src="../assets/icons/add_person.svg">
             </div>
-            <div v-show="logar">
+            <div v-if="logar">
                 <b-form-input
                     v-model="form.email"
                     type="email"
@@ -25,7 +25,7 @@
                             variant="secondary">Cadastre-se</b-button>
                     </div>
             </div>
-            <div v-show="!logar">
+            <div v-else>
                 <b-form-input
                     v-model="form.nome"
                     type="text"
@@ -49,7 +49,7 @@
                             variant="secondary">Fazer login</b-button>
                     </div>
             </div>
-                <div class="link-esqueceu-senha">
+                <div class="link-esqueceu-senha-user">
                     <b-button v-if="logar">Esqueceu sua senha?</b-button>
                 </div>
                 
@@ -60,7 +60,6 @@
 <script>
 import Alert from '../components/Alert.vue'
 import url from '../config/global.js'
-import { signIn } from '../config/auth.js'
 
 export default {
     name: "ModalUser",
@@ -178,7 +177,7 @@ export default {
             this.form.telefone = null
             console.log('Resetou')
 
-        },
+        }
     }
 }
 
@@ -194,6 +193,18 @@ export default {
   font-size: 1.4rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
+}
+.modal-header .close{
+    background-color: rgb(134, 134, 134);
+    padding: .2rem .5rem;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+
+}
+.modal-header .close:hover{
+    background-color: rgb(90, 90, 90);
+    
 }
 .modal-body{
   padding: 0;
@@ -269,11 +280,11 @@ export default {
     border-radius: 10px;
     
 }
-#loginUser .link-esqueceu-senha{
+#loginUser .link-esqueceu-senha-user{
     margin: 1rem 0;
 
 }
-#loginUser .link-esqueceu-senha button{
+#loginUser .link-esqueceu-senha-user button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: .8rem;
     padding: .8rem 2rem;
@@ -284,7 +295,7 @@ export default {
     border-radius: 10px;
     
 }
-#loginUser .link-esqueceu-senha button:hover{
+#loginUser .link-esqueceu-senha-user button:hover{
     color: red;
     font-weight: bold;
 

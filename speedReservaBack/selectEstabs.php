@@ -27,13 +27,13 @@ if(isset($_GET["buscarEstabs"])){
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idEstabelecimento"=>$row['idEstabelecimento'],
+    array_push($saida, array("idEstabelecimento"=>intval($row['idEstabelecimento']),
                               "nome"=>$row['nome'],
                               "descricao"=>$row['descricao'],
-                              "favorito"=>$row['idFavorito'],
-                              "agendado"=>$row['idAgendamento'],
-                              "imgSrc"=>null,
-                              "statusHorario"=>"Fechado"));
+                              "favorito"=>intval($row['idFavorito']),
+                              "agendado"=>intval($row['idAgendamento']),
+                              "imgSrc"=>'',
+                              "isClosed"=>intval('0')));
     $cont++;
 
   }
@@ -43,7 +43,7 @@ if(isset($_GET["buscarEstabs"])){
     exit;
 
   }else{
-    array_push($saida, array("idEstabelecimento"=>"null"));
+    array_push($saida, array("idEstabelecimento"=>null));
     
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);

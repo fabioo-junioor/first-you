@@ -20,7 +20,7 @@ if(isset($_GET["insertFavorito"])){
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idFavorito"=>$row['idFavorito']));
+    array_push($saida, array("idFavorito"=>intval($row['idFavorito'])));
     $cont++;
 
   }
@@ -32,7 +32,7 @@ if(isset($_GET["insertFavorito"])){
   }else{
     $executa2 = mysqli_query($con, "INSERT INTO favorito (idUsuario, idEstabelecimento, dataTime)
                                 VALUES ('$idUsuario', '$idEstabelecimento', now())");
-    array_push($saida, array("idFavorito"=>"success"));
+    array_push($saida, array("idFavorito"=>intval("1")));
     
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);
@@ -51,7 +51,7 @@ if(isset($_GET["deleteFavorito"])){
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idFavorito"=>"success"));
+    array_push($saida, array("idFavorito"=>intval("1")));
     $cont++;
 
   }
@@ -64,7 +64,7 @@ if(isset($_GET["deleteFavorito"])){
     exit;
 
   }else{    
-    array_push($saida, array("idFavorito"=>"null"));
+    array_push($saida, array("idFavorito"=>null));
     
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);

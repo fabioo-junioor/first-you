@@ -20,7 +20,7 @@ if(isset($_GET["insertUser"])){
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idUsuario"=>$row['idUsuario']));
+    array_push($saida, array("idUsuario"=>intval($row['idUsuario'])));
     $cont++;
 
   }
@@ -41,19 +41,21 @@ if(isset($_GET["insertUser"])){
   }  
 }
 if(isset($_GET["insertEstabelecimento"])){
-  $nome = $data->nome;
-  $telefone = $data->telefone;
+  $nome = $data->nomeEstab;
   $email = $data->email;
   $senha = $data->senha;
+  $telefone = intval($data->telefone);
   $nomeResponsavel = $data->nomeResponsavel;
-
-  $executa = mysqli_query($con, "SELECT idEstabelecimento FROM estabelecimento
-    WHERE email = '$email'");
+  $descricao = '';
+  
+  $executa = mysqli_query($con, "SELECT idEstabelecimento
+                          FROM estabelecimento
+                          WHERE email = '$email'");
   $saida = array();
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idEstabelecimento"=>$row['idEstabelecimento']));
+    array_push($saida, array("idEstabelecimento"=>intval($row['idEstabelecimento'])));
     $cont++;
 
   }
@@ -63,8 +65,8 @@ if(isset($_GET["insertEstabelecimento"])){
     exit;
 
   }else{
-    $executa2 = "INSERT INTO estabelimento (nome, telefone, email, senha, nomeResponsavel, apto)
-                  VALUES ('$nome', '$telefone', '$email', '$senha', '$nomeResponsavel', 0)";
+    $executa2 = mysqli_query($con, "INSERT INTO estabelecimento (nome, telefone, email, senha, nomeResponsavel, descricao, apto)
+                  VALUES ('$nome', '$telefone', '$email', '$senha', '$nomeResponsavel', '$descricao', 0)");
     array_push($saida, array("idEstabelecimento"=>"success"));
 
     $saida = converteArrayParaUtf8($saida);

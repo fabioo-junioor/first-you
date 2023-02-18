@@ -21,16 +21,11 @@
                     <div class="buttons-login-estab">
                         <b-button @click="logarEstab()"
                             variant="primary">Acessar</b-button>
-                        <b-button @click="reset()"
-                            type="reset"
-                            variant="danger">Resetar</b-button>
+                        <b-button @click="logar = !logar"
+                            variant="secondary">Cadastre-se</b-button>
                     </div>
             </div>
             <div v-show="!logar">
-                <b-form-input
-                    v-model="form.nomeResponsavel"
-                    type="text"
-                    placeholder="Informe o nome do responsavel: "></b-form-input>
                 <b-form-input
                     v-model="form.nomeEstab"
                     type="text"
@@ -40,33 +35,34 @@
                     type="email"
                     placeholder="Informe o email: "></b-form-input>
                 <b-form-input
-                    v-model="form.telefone"
-                    type="fone"
-                    placeholder="Informe o telefone: "></b-form-input>
-                <b-form-input
                     v-model="form.senha"
                     type="password"
                     placeholder="Informe a senha: "></b-form-input>
+                <b-form-input
+                    v-model="form.telefone"
+                    type="number"
+                    placeholder="Informe o telefone: "></b-form-input>
+                <b-form-input
+                    v-model="form.nomeResponsavel"
+                    type="text"
+                    placeholder="Informe o nome do responsavel: "></b-form-input>
                     <div class="buttons-login-estab">
                         <b-button @click="cadastrarEstab()"
-                            type="submit"
-                            variant="primary">Cadastrar-se</b-button>
-                        <b-button @click="reset()"
-                            type="reset"
-                            variant="danger">Resetar</b-button>
+                            variant="primary">Salvar</b-button>
+                        <b-button @click="logar = !logar, reset()"
+                            variant="secondary">Fazer Login</b-button>
                     </div>
             </div>
-                <div class="link-cadastrar-estab">
-                    <b-button @click="logar = !logar" v-show="logar">Cadastre-se</b-button>
-                    <b-button @click="logar = !logar" v-show="!logar">Fazer Login</b-button>
+                <div class="link-esqueceu-senha-estab">
+                    <b-button v-if="logar">Esqueceu sua senha?</b-button>
                 </div>
-                
         </b-form>
     </div>
     </b-modal>
 </template>
 <script>
 import Alert from '../components/Alert.vue'
+import url from '../config/global.js'
 
 export default {
     name: "ModalEstab",
@@ -74,11 +70,11 @@ export default {
     data(){
         return{
             form: {
-                nomeResponsavel: '',
                 nomeEstab: '',
                 email: '',
-                telefone: '',
-                senha: ''
+                senha: '',
+                telefone: null,
+                nomeResponsavel: ''
 
             },
             alert: {
@@ -93,48 +89,90 @@ export default {
     },
     methods: {
         logarEstab(){
-            if(this.form.email === "con" && this.form.senha === "1"){
-                console.log(this.form.email, this.form.senha)
-                this.alert.texto = 'Bem vindo!'
-                this.alert.tipo = 'success'
+            if(this.form.email == "" || this.form.senha == ""){
+                this.alert.texto = 'Preencha os campos!'
+                this.alert.tipo = 'danger'
                 this.alert.isAlert = true
-
-                this.$store.commit('navVisible', '3')
-                this.$router.push({path: '/inicioEstab'})
-                setTimeout(() => {
-                    this.$router.go(0)
-
-                }, 3000)
-                
+                this.resetAlert()
 
             }else{
-                if(this.form.email === "" || this.form.senha === ""){
-                    this.alert.texto = 'Preencha os campos!'
-                    this.alert.tipo = 'danger'
-                    this.alert.isAlert = true
-                    this.resetAlert()
+                fetch(url+'authUserEstab.php?buscarEstabelecimento=1', {
+                    method: "POST",
+                    body: JSON.stringify(this.form)
+                })
+                    .then((res) => res.json())
+                    .then((dados) => {
+                    console.log("-> ", dados)
+                    if(dados[0].idEstabelecimento != null){
+                        this.alert.texto = 'Bem vindo!'
+                        this.alert.tipo = 'success'
+                        this.alert.isAlert = true
+    
+                        this.$store.commit('loginUser', dados)
+                        this.$store.commit('navVisible', '3')
+                        setTimeout(async () => {
+                            await this.$router.push({path: '/inicioEstab'})
+                            await this.$router.go(0)
+    
+                        }, 3000)        
+                    }else{
+                        this.alert.texto = 'Email ou Senha incorretos!'
+                        this.alert.tipo = 'danger'
+                        this.alert.isAlert = true
+                        this.resetAlert()
+                               
+                    }    
+                })
+                    .catch(console.log)
+                
+            }            
+        },        
+        cadastrarEstab(){
+            if(this.form.nomeEstab == "" || this.form.email == "" || this.form.senha == "" || this.form.telefone == null || this.form.nomeResponsavel == ""){
+                this.alert.texto = 'Preencha os campos!'
+                this.alert.tipo = 'danger'
+                this.alert.isAlert = true
+                this.resetAlert()
 
-                }else{
-                    this.alert.texto = 'Email ou Senha incorretos!'
-                    this.alert.tipo = 'danger'
-                    this.alert.isAlert = true
-                    this.resetAlert()
+            }else{
+                fetch(url+'insertUserEstab.php?insertEstabelecimento=1', {
+                    method: "POST",
+                    body: JSON.stringify(this.form)
+                })
+                    .then((res) => res.json())
+                    .then((dados) => {
+                    console.log("-> ", dados, this.form)
+                    if(dados[0].idEstabelecimento == 'success'){
+                        this.alert.texto = 'Cadastrado, Efetue o login!'
+                        this.alert.tipo = 'success'
+                        this.alert.isAlert = true
+                        setTimeout(() => {
+                            this.reset()
+                            this.$router.go(0)
 
-                }                           
-            }
+                        }, 3000)        
+
+                    }else{
+                        this.alert.texto = 'Email ja cadastrado!'
+                        this.alert.tipo = 'danger'
+                        this.alert.isAlert = true
+                        this.reset()
+                        this.resetAlert()
+
+                    }
+                })
+                    .catch(console.log)
+
+            }            
         },
         reset(){
             this.form.nomeResponsavel = ''
             this.form.nomeEstab = ''
             this.form.email = ''
-            this.form.telefone = ''
+            this.form.telefone = null
             this.form.senha = ''
             console.log('resetou')
 
-        },
-        cadastrarEstab(){
-            console.log("cadastrar")
-            
         },
         resetAlert(){
             setTimeout(() => {
@@ -150,15 +188,20 @@ export default {
 
 </script>
 <style>
+.modal-content{
+    box-shadow: 1px 1px 5px #252525;
+    border-radius: 10px !important;
+
+}
 .modal-header h5{
-  color: #494949;
+  color: #252525;
   font-size: 1.4rem;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 }
 .modal-body{
   padding: 0;
-  background-color: #494949;
+  background-color: #fff !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -179,7 +222,7 @@ export default {
 
 }
 #loginEstab form{
-    background-color: #494949;
+    background-color: #fff;
     width: 100% !important;
     padding: 1rem 1rem;
     border-radius: 5px;
@@ -195,17 +238,17 @@ export default {
 #loginEstab form img{
     height: 8rem;
     margin-bottom: .8rem;
-    filter: drop-shadow(2px 2px 2px #252525)
+    filter: drop-shadow(1px 1px 3px #252525)
 
 }
 #loginEstab form input{
     margin: 5px 0px;
     border: none;
-    height: 3rem;
-    border-radius: 5px;
-    background-color: #252525;
-    box-shadow: 3px 3px 0px #1b1b1b;
-    color: white;
+    height: 3.5rem;
+    border-radius: 10px;
+    background-color: #076585;
+    box-shadow: 2px 2px 5px #252525;
+    color: #fff;
 
 }
 #loginEstab form input::placeholder{
@@ -224,26 +267,30 @@ export default {
 }
 #loginEstab .buttons-login-estab button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    box-shadow: 3px 3px 0px #252525;
+    box-shadow: 2px 2px 5px #252525;
     width: 40%;
     height: 3rem;
-    border-radius: 5px;
+    border-radius: 10px;
     
 }
-#loginEstab .link-cadastrar-estab{
+#loginEstab .link-esqueceu-senha-estab{
     margin: 1rem 0;
 
 }
-#loginEstab .link-cadastrar-estab button{
+#loginEstab .link-esqueceu-senha-estab button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1rem;
-    color: white;
+    font-size: .8rem;
+    padding: .8rem 2rem;
+    color: #252525;
+    font-weight: bold;
     background-color: transparent;
     border: none;
+    border-radius: 10px;
     
 }
-#loginEstab .link-cadastrar-estab button:hover{
-    background-color: #5f5f5f;
+#loginEstab .link-esqueceu-senha-estab button:hover{
+    color: red;
+    font-weight: bold;
 
 }
 </style>

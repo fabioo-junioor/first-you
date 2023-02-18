@@ -27,7 +27,7 @@ if(isset($_GET["insertAgendamento"])){
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idAgendamento"=>$row['idAgendamento']));
+    array_push($saida, array("idAgendamento"=>intval($row['idAgendamento'])));
     $cont++;
 
   }
@@ -39,7 +39,7 @@ if(isset($_GET["insertAgendamento"])){
   }else{
     $executa2 = mysqli_query($con, "INSERT INTO agendamento (idUsuario, idEstabelecimento, qtdPessoas, observacao, dataTime)
                                 VALUES ('$idUsuario', '$idEstabelecimento', '$qtdPessoas', '$observacao', now())");
-    array_push($saida, array("idAgendamento"=>"success"));
+    array_push($saida, array("idAgendamento"=>intval("1")));
     
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);
@@ -58,7 +58,7 @@ if(isset($_GET["deleteAgendamento"])){
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idAgendamento"=>"success"));
+    array_push($saida, array("idAgendamento"=>intval("1")));
     $cont++;
 
   }
@@ -71,7 +71,7 @@ if(isset($_GET["deleteAgendamento"])){
     exit;
 
   }else{    
-    array_push($saida, array("idAgendamento"=>"null"));
+    array_push($saida, array("idAgendamento"=>null));
     
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);

@@ -19,7 +19,7 @@ if(isset($_GET["buscarUser"])){
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idUsuario"=>$row['idUsuario'],
+    array_push($saida, array("idUsuario"=>intval($row['idUsuario']),
                               "nome"=>$row['nome']));
     $cont++;
 
@@ -30,7 +30,7 @@ if(isset($_GET["buscarUser"])){
     exit;
 
   }else{
-    array_push($saida, array("idUsuario"=>"null",
+    array_push($saida, array("idUsuario"=>null,
                               "nome"=>"null"));
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);
@@ -42,13 +42,13 @@ if(isset($_GET["buscarEstabelecimento"])){
   $email = $data->email;
   $senha = $data->senha;
 
-  $executa = mysqli_query($con, "SELECT * FROM usuario
+  $executa = mysqli_query($con, "SELECT * FROM estabelecimento
     WHERE email = '$email' AND senha = '$senha'");
   $saida = array();
   $cont = 0;
 
   while($row = mysqli_fetch_array($executa)){
-    array_push($saida, array("idUsuario"=>$row['idUsuario'],
+    array_push($saida, array("idEstabelecimento"=>intval($row['idEstabelecimento']),
                               "nome"=>$row['nome']));
     $cont++;
 
@@ -59,8 +59,7 @@ if(isset($_GET["buscarEstabelecimento"])){
     exit;
 
   }else{
-    array_push($saida, array("idUsuario"=>"null",
-                              "nome"=>"null"));
+    array_push($saida, array("idEstabelecimento"=>null));
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);
     exit;
