@@ -10,7 +10,7 @@
             type="number"
             placeholder="Quantas pessoas?"></b-form-input>
           <b-form-input
-            v-model="form.diaAgendamento"
+            v-model="form.dataAgendamento"
             type="date"></b-form-input>
             <b-form-textarea
                 v-model="form.observacao"
@@ -43,7 +43,7 @@ export default {
     return {
       form: {
         qtdPessoas: null,
-        diaAgendamento: '',
+        dataAgendamento: '',
         observacao: '',
         
       }
@@ -55,22 +55,22 @@ export default {
         idUsuario: idUsuario, 
         idEstabelecimento: idEstabelecimento,
         qtdPessoas: this.form.qtdPessoas,
-        dataAgendamento: this.form.diaAgendamento,
+        dataAgendamento: this.form.dataAgendamento,
         observacao: this.form.observacao
 
         }
-        //console.log(this.form.dataAgendamento)
         fetch(url+'insertDeleteAgendamento.php?insertAgendamento=1', {
           method: "POST",
           body: JSON.stringify(dadosAgendamento)
         })
           .then((res) => res.json())
           .then((dados) => {
-            if(dados[0].idAgendamento === 1){
-              console.log("Agendado em -> ", idEstabelecimento, dados)
+            console.log(dados[0].idAgendamento)
+            if(dados[0].idAgendamento == 'success'){
+              console.log("Agendado: ", dados)
               this.alertMsg(true)
               setTimeout(async () => {
-                this.$router.go(0)
+                await this.$router.go(0)
 
               }, 3000) 
             }

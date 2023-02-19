@@ -40,7 +40,7 @@ export default{
       })
         .then((res) => res.json())
         .then((dados) => {
-          console.log("-> ", dados)
+          console.log("Users: ", dados)
           this.usuario = dados
         
         })

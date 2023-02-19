@@ -10,17 +10,12 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Autho
 $data = json_decode(file_get_contents("php://input"));
 
 if(isset($_GET["insertAgendamento"])){
-  $idUsuario = $data->idUsuario;
-  $idEstabelecimento = $data->idEstabelecimento;
-  $qtdPessoas = $data->qtdPessoas;
-  $diaAgendamento = $data->$diaAgendamento;
+  $idUsuario = intval($data->idUsuario);
+  $idEstabelecimento = intval($data->idEstabelecimento);
+  $qtdPessoas = intval($data->qtdPessoas);
+  $dataAgendamento = $data->dataAgendamento;
   $observacao = $data->observacao;
-  /*
-  $idUsuario = 1;
-  $idEstabelecimento = 3;
-  $qtdPessoas = 10;
-  $observacao = 'a';
-  */
+  
   $executa = mysqli_query($con, "SELECT idAgendamento FROM agendamento
                                   WHERE idEstabelecimento = '$idEstabelecimento'
                                   AND idUsuario = '$idUsuario'");
@@ -39,8 +34,8 @@ if(isset($_GET["insertAgendamento"])){
 
   }else{
     $executa2 = mysqli_query($con, "INSERT INTO agendamento (idUsuario, idEstabelecimento, qtdPessoas, observacao, dataTime, dataAgendamento)
-                                VALUES ('$idUsuario', '$idEstabelecimento', '$qtdPessoas', '$observacao', now(), '$diaAgendamento')");
-    array_push($saida, array("idAgendamento"=>intval("1")));
+                                VALUES ('$idUsuario', '$idEstabelecimento', '$qtdPessoas', '$observacao', now(), '$dataAgendamento')");
+    array_push($saida, array("idAgendamento"=>"success"));
     
     $saida = converteArrayParaUtf8($saida);
     echo json_encode($saida);

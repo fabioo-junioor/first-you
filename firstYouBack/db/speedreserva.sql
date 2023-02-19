@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 19-Fev-2023 às 05:02
+-- Tempo de geração: 19-Fev-2023 às 18:47
 -- Versão do servidor: 8.0.31
 -- versão do PHP: 8.0.26
 
@@ -39,7 +39,14 @@ CREATE TABLE IF NOT EXISTS `agendamento` (
   PRIMARY KEY (`idAgendamento`),
   KEY `idUsuario` (`idUsuario`),
   KEY `idEstabelecimento` (`idEstabelecimento`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Extraindo dados da tabela `agendamento`
+--
+
+INSERT INTO `agendamento` (`idAgendamento`, `idUsuario`, `idEstabelecimento`, `qtdPessoas`, `observacao`, `dataTime`, `dataAgendamento`) VALUES
+(46, 1, 3, 15, 'crianças', '2023-02-19 15:41:27', '2023-03-01');
 
 -- --------------------------------------------------------
 
@@ -67,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `estabelecimento` (
 INSERT INTO `estabelecimento` (`idEstabelecimento`, `nome`, `telefone`, `email`, `senha`, `nomeResponsavel`, `descricao`, `apto`) VALUES
 (1, 'Confraria Pub', 888888888, 'confraria@bol.com', '111', 'Carlos', 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI', 0),
 (2, 'Gonha Lanches', 8888887, 'gonha@bol.com', '66', 'Gonha', 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...', 0),
-(3, 'Furacao Lanches', 77777777, 'furacao@bol.com', '123', 'Jorge', 'LLorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI', 0),
-(5, 'Sabores da Serra', 99999990, 'serra@bol.com', '77', 'Patricia', '', 0);
+(3, 'Furacao Lanches', 77777777, 'furacao@bol.com', '123', 'Jorge', 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI', 0),
+(5, 'Sabores da Serra', 99999990, 'serra@bol.com', '77', 'Patricia', 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI...', 0);
 
 -- --------------------------------------------------------
 

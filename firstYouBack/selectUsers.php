@@ -17,7 +17,7 @@ if(isset($_GET["buscarUsers"])){
     $executa = mysqli_query($con, "SELECT (SELECT nome
                                             FROM usuario AS u 
                                             WHERE `u`.idUsuario = `a`.idUsuario) AS nomeUser,
-                                    observacao, dataTime, idUsuario, qtdPessoas
+                                    observacao, dataAgendamento, idUsuario, qtdPessoas
                                     FROM agendamento AS a
                                     WHERE idEstabelecimento = '$idEstabelecimento'");
     $saida = array();
@@ -28,7 +28,7 @@ if(isset($_GET["buscarUsers"])){
                                 "nome"=>$row['nomeUser'],
                                 "observacao"=>$row['observacao'],
                                 "qtdPessoas"=>$row['qtdPessoas'],
-                                "data"=>formataData($row['dataTime'])));
+                                "data"=>formataData($row['dataAgendamento'])));
         $cont++;
 
     }
