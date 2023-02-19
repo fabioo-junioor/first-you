@@ -5,36 +5,53 @@
       :idUsuario="card.idUsuario"
       :nome="card.nome"
       :observacao="card.observacao"
+      :qtdPessoas="card.qtdPessoas"
       :data="card.data"/>
   </div>
 </template>
 <script>
 import CardUser from '../../components/CardUser.vue'
+import url from '../../config/global.js'
 
 export default{
   name: "InicioEstab",
   components: {CardUser},
   data(){
     return{
+      idEstabelecimento: localStorage.getItem('idEstabLogado'),
       usuario: [
         {
-          idUsuario: 1,
-          nome: 'Fabio Junior',
-          observacao: 'Lorem Ipsum é simplesmente uma simulação de texto da indústria tipográfica e de impressos, e vem sendo utilizado desde o século XVI',
-          data: '01/01/2000'
-          
-        },
-        {
-          idUsuario: 2,
-          nome: 'Maria Silva',
-          observacao: 'sem salada',
-          data: '12/02/1900'
+          idUsuario: null,
+          nome: '',
+          data: '',
+          observacao: '',
+          qtdPessoas: null
 
         }
       ]
     }
-  }
+  },
+  methods: {
+    buscaUsuarios(){
+      var dadosEstabelecimento = {idEstabelecimento: this.idEstabelecimento}
+      fetch(url+'selectUsers.php?buscarUsers=1', {
+        method: "POST",
+        body: JSON.stringify(dadosEstabelecimento)
+      })
+        .then((res) => res.json())
+        .then((dados) => {
+          console.log("-> ", dados)
+          this.usuario = dados
+        
+        })
+          .catch(console.log)
 
+    }
+  },
+  created(){
+    this.buscaUsuarios()
+
+  }
 }
 </script>
 <style>

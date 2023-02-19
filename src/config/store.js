@@ -22,14 +22,27 @@ const store = createStore({
         async loginUser(state, dadosUser){
             await localStorage.setItem('idUserLogado', dadosUser[0].idUsuario)
             await localStorage.setItem('nomeUserLogado', dadosUser[0].nome)
-            console.log('login ')
+            console.log('login user')
+    
+        },
+        async loginEstab(state, dadosEstab){
+            await localStorage.setItem('idEstabLogado', dadosEstab[0].idEstabelecimento)
+            await localStorage.setItem('nomeEstabLogado', dadosEstab[0].nome)
+            console.log('login estab')
     
         },
         async logoutUser(state){
             await localStorage.removeItem('idUserLogado')
             await localStorage.removeItem('nomeUserLogado')
             await localStorage.removeItem('typeLogin')
-            console.log('logout ')
+            console.log('logout user')
+
+        },
+        async logoutEstab(state){
+            await localStorage.removeItem('idEstabLogado')
+            await localStorage.removeItem('nomeEstabLogado')
+            await localStorage.removeItem('typeLogin')
+            console.log('logout estab')
 
         }
     }

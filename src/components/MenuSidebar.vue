@@ -82,7 +82,7 @@
           </span>
           <span>
             <li class="link-modal-estabelecimento" v-if="buttonsInOut === '1'">
-              <a v-b-modal.modal-scrollable-estab-xl>
+              <a v-b-modal.modal-scrollable-estab-lg>
                 <ModalEstab />
                 <i class="bx bx-log-in" />
                 <span class="links_name" v-show="isOpened">Login Estabelecimento</span>
@@ -241,7 +241,7 @@ import ModalEstab from './ModalEstab.vue'
       },
       profileName: {
         type: String,
-        default: localStorage.getItem('nomeUserLogado'),
+        default: localStorage.getItem('idUserLogado') == null ? localStorage.getItem('nomeEstabLogado') : localStorage.getItem('nomeUserLogado'),
       },
       profileRole: {
         type: String,
@@ -335,12 +335,23 @@ import ModalEstab from './ModalEstab.vue'
 
       },
       buttonExitClicked(){
-        this.$store.commit('logoutUser')
-        setTimeout(async () => {
-          await this.$router.push({path: '/'})
-          await this.$router.go(0)
+        if(localStorage.getItem('idEstabLogado') == null){
+          this.$store.commit('logoutUser')
+          setTimeout(async () => {
+            await this.$router.push({path: '/'})
+            await this.$router.go(0)
+  
+          }, 1000)
 
-        }, 1000)
+        }else{
+          this.$store.commit('logoutEstab')
+          setTimeout(async () => {
+            await this.$router.push({path: '/'})
+            await this.$router.go(0)
+
+          }, 1000)
+
+        }
       }
     },
     computed: {

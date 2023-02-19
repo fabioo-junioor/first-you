@@ -1,5 +1,5 @@
 <template>
-    <b-modal id="modal-scrollable-estab-xl" size="xl" scrollable title="Login Estabelecimento">
+    <b-modal id="modal-scrollable-estab-lg" size="xl" scrollable title="Login Estabelecimento">
       <Alert :texto=alert.texto 
           :tipo=alert.tipo
           class="alert-estab"
@@ -108,7 +108,7 @@ export default {
                         this.alert.tipo = 'success'
                         this.alert.isAlert = true
     
-                        this.$store.commit('loginUser', dados)
+                        this.$store.commit('loginEstab', dados)
                         this.$store.commit('navVisible', '3')
                         setTimeout(async () => {
                             await this.$router.push({path: '/inicioEstab'})

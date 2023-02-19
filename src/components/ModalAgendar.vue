@@ -9,6 +9,9 @@
             v-model="form.qtdPessoas"
             type="number"
             placeholder="Quantas pessoas?"></b-form-input>
+          <b-form-input
+            v-model="form.diaAgendamento"
+            type="date"></b-form-input>
             <b-form-textarea
                 v-model="form.observacao"
                 id="textarea-large"
@@ -40,6 +43,7 @@ export default {
     return {
       form: {
         qtdPessoas: null,
+        diaAgendamento: '',
         observacao: '',
         
       }
@@ -51,9 +55,11 @@ export default {
         idUsuario: idUsuario, 
         idEstabelecimento: idEstabelecimento,
         qtdPessoas: this.form.qtdPessoas,
+        dataAgendamento: this.form.diaAgendamento,
         observacao: this.form.observacao
 
         }
+        //console.log(this.form.dataAgendamento)
         fetch(url+'insertDeleteAgendamento.php?insertAgendamento=1', {
           method: "POST",
           body: JSON.stringify(dadosAgendamento)
@@ -62,9 +68,9 @@ export default {
           .then((dados) => {
             if(dados[0].idAgendamento === 1){
               console.log("Agendado em -> ", idEstabelecimento, dados)
-                this.alertMsg(true)
-                setTimeout(async () => {
-                  this.$router.go(0)
+              this.alertMsg(true)
+              setTimeout(async () => {
+                this.$router.go(0)
 
               }, 3000) 
             }
@@ -78,7 +84,8 @@ export default {
     },
     reset() {
       this.form.qtdPessoas = null;
-      this.form.observacao = "";
+      this.form.observacao = '';
+      this.form.diaAgendamento = ''
       console.log("Resetou");
 
     }

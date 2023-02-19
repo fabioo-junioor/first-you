@@ -1,15 +1,24 @@
 <template>
-    <div id="cardUser">
-        <b-card :header="nome" align="center">
-            <div>
-                <h5>Observação</h5>
-                <b-card-text>{{observacao}}</b-card-text>
-            </div>
+    <div id="cardUser" v-if="idUsuario">
+        <b-card :header="nome">
             <div>
                 <h5>Data</h5>
                 <b-card-text>{{data}}</b-card-text>
             </div>
+            <div>
+                <h5>Pessoas</h5>
+                <b-card-text v-if="qtdPessoas">{{qtdPessoas}}</b-card-text>
+                <b-card-text v-else>1</b-card-text>
+            </div>
+            <div>
+                <h5>Observação</h5>
+                <b-card-text v-if="observacao">{{observacao}}</b-card-text>
+                <b-card-text v-else>Sem Observação</b-card-text>
+            </div>
         </b-card>
+    </div>
+    <div v-else>
+        <h4>Sem Agendamentos!</h4>
     </div>
 </template>
 <script>
@@ -24,7 +33,8 @@ export default{
         idUsuario: Number,
         nome: String,
         observacao: String,
-        data: String
+        data: String,
+        qtdPessoas: Number
 
     }
 }
@@ -41,17 +51,28 @@ export default{
     padding: 0;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
 
 }
-#cardUser div{
+#cardUser .card-body div{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     height: 100%;
     margin: auto .3rem;
+
+}
+#cardUser .card-body div:nth-child(1){
+    width: 25%;
+    
+}
+#cardUser .card-body div:nth-child(2){
+    width: 20%;
+
+}
+#cardUser .card-body div:nth-child(3){
+    width: 55%;
 
 }
 #cardUser .card-header{
@@ -64,7 +85,7 @@ export default{
     justify-content: center;
     align-items: center;
     margin: auto .2rem;
-    width: 20%;
+    width: 15%;
     height: 90%;
     border-radius: 10px;
 
@@ -74,19 +95,19 @@ export default{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 80%;
+    width: 85%;
     height: 100%;
 
 }
 #cardUser .card-body h5{
-    border-bottom: 1px solid black;
-    font-size: 1rem;
+    font-size: .9rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
 
 }
 #cardUser .card-body p{
     text-align: justify;
-    font-size: .9rem;
+    font-size: .8rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     
     overflow: hidden;

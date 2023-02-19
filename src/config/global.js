@@ -1,4 +1,4 @@
-const url = 'http://localhost/speedreservaback/'
+const url = 'http://localhost/firstyouback/'
 
 
 export default url

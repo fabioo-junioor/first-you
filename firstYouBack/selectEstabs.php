@@ -33,7 +33,7 @@ if(isset($_GET["buscarEstabs"])){
                               "favorito"=>intval($row['idFavorito']),
                               "agendado"=>intval($row['idAgendamento']),
                               "imgSrc"=>'',
-                              "isClosed"=>intval('0')));
+                              "isClosed"=>intval('1')));
     $cont++;
 
   }
@@ -49,7 +49,7 @@ if(isset($_GET["buscarEstabs"])){
     echo json_encode($saida);
     exit;
 
-  }  
+  } 
 }
 
 function converteArrayParaUtf8($saida){

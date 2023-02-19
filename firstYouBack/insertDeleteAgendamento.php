@@ -13,6 +13,7 @@ if(isset($_GET["insertAgendamento"])){
   $idUsuario = $data->idUsuario;
   $idEstabelecimento = $data->idEstabelecimento;
   $qtdPessoas = $data->qtdPessoas;
+  $diaAgendamento = $data->$diaAgendamento;
   $observacao = $data->observacao;
   /*
   $idUsuario = 1;
@@ -37,8 +38,8 @@ if(isset($_GET["insertAgendamento"])){
     exit;
 
   }else{
-    $executa2 = mysqli_query($con, "INSERT INTO agendamento (idUsuario, idEstabelecimento, qtdPessoas, observacao, dataTime)
-                                VALUES ('$idUsuario', '$idEstabelecimento', '$qtdPessoas', '$observacao', now())");
+    $executa2 = mysqli_query($con, "INSERT INTO agendamento (idUsuario, idEstabelecimento, qtdPessoas, observacao, dataTime, dataAgendamento)
+                                VALUES ('$idUsuario', '$idEstabelecimento', '$qtdPessoas', '$observacao', now(), '$diaAgendamento')");
     array_push($saida, array("idAgendamento"=>intval("1")));
     
     $saida = converteArrayParaUtf8($saida);
